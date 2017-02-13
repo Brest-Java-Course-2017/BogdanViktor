@@ -1,4 +1,4 @@
-package tempPackage;
+package com.epam.test;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
