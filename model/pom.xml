@@ -6,7 +6,7 @@
   <packaging>jar</packaging>
 
   <parent>
-    <groupId>tempPackage</groupId>
+    <groupId>com.epam.test</groupId>
     <artifactId>user-managment</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
