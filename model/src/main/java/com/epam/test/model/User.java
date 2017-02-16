@@ -5,15 +5,26 @@ import java.util.Objects;
 /**
  * Created by sw0rd on 14.02.17.
  */
+
 public class User {
+
     private Integer userId;
+
     private String login;
+
     private String password;
+
     private String description;
 
-//    public static void main(String[] args) {
-//
-//    }
+    public User() {
+    }
+
+    public User(Integer userId, String login, String password, String description) {
+        this.userId = userId;
+        this.login = login;
+        this.password = password;
+        this.description = description;
+    }
 
     public Integer getUserId() {
         return userId;
@@ -48,16 +59,6 @@ public class User {
     }
 
     @Override
-    public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                ", description='" + description + '\'' +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -71,5 +72,15 @@ public class User {
     @Override
     public int hashCode() {
         return Objects.hash(userId, login, password, description);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 }
