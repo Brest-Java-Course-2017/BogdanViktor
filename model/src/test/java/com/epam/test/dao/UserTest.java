@@ -1,4 +1,4 @@
-package com.epam.test.model;
+package com.epam.test.dao;
 
 import junit.framework.Assert;
 

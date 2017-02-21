@@ -1,19 +1,21 @@
 package com.epam.test.dao;
 
-import com.epam.test.model.User;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 
 import javax.sql.DataSource;
-import java.io.FileReader;
-import java.io.IOException;
 import java.sql.*;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Properties;
+import java.util.Map;
 
 /**
  * Created by sw0rd on 15.02.17.
@@ -23,16 +25,28 @@ public class UserDaoImpl implements UserDao {
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    private static Properties properties = new Properties();
-    static {
-        try {
-            properties.load(new FileReader("src/main/resources/app.properties"));
-        } catch (IOException e) {
-            LOGGER.error("File app.properties doesn't exist", e);
-            e.printStackTrace();
-        }
-    }
+    static final String USER_ID = "user_id";
+    static final String LOGIN = "login";
+    static final String PASSWORD = "password";
+    static final String DESCRIPTION = "description";
 
+    @Value("${user.select}")
+    String getAllUsersSql;
+
+    @Value("${user.selectByLogin}")
+    String getUserByLoginSql;
+
+    @Value("${user.selectById}")
+    String getUserByIdSql;
+
+    @Value("${user.insert}")
+    String insertUserSql;
+
+    @Value("${user.update}")
+    String updateUserSql;
+
+    @Value("${user.delete}")
+    String deleteUserSql;
 
 
     public UserDaoImpl(DataSource dataSource) {
@@ -40,72 +54,62 @@ public class UserDaoImpl implements UserDao {
         namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
+
     @Override
-    public List<User> getAllUsers() {
+    public List<User> getAllUsers() throws DataAccessException {
         LOGGER.debug("getAllUsers()");
-        try{
-            return jdbcTemplate.query(properties.getProperty("user.selectAll"), new UserRowMapper());
-        }catch (Exception e){
-            LOGGER.warn("Exception in method \"getAllUsers\"", e);
-            throw e;
-        }
+        return jdbcTemplate.query(getAllUsersSql, new UserRowMapper());
     }
 
     @Override
-    public User getUserById(Integer userId) {
+    public User getUserById(Integer userId) throws DataAccessException{
         LOGGER.debug("getUserById({})", userId);
-        try{
-            SqlParameterSource namedParameters = new MapSqlParameterSource("p_user_id", userId);
-            User user = namedParameterJdbcTemplate.queryForObject(properties.getProperty("user.selectById"),
-                    namedParameters, new UserRowMapper());
-            return user;
-        }catch (Exception e){
-            LOGGER.warn("Exception in method \"getUserById({})\"",userId/*, e*/);
-            throw e;
-        }
+        SqlParameterSource namedParameters = new MapSqlParameterSource("p_user_id", userId);
+        User user = namedParameterJdbcTemplate.queryForObject(
+                getUserByIdSql, namedParameters, new UserRowMapper());
+        return user;
+    }
 
+    @Override
+    public User getUserByLogin(String login) throws DataAccessException {
+        LOGGER.debug("getUserByLogin({})", login);
+        SqlParameterSource namedParameters = new MapSqlParameterSource("p_login", login);
+        User user = namedParameterJdbcTemplate.queryForObject(
+                getUserByLoginSql, namedParameters, new UserRowMapper());
+        return user;
     }
 
     @Override
     public Integer addUser(User user) {
-        LOGGER.debug("addUser({})", user);
-
-        try {
-            Object[] params = new Object[] {user.getLogin(), user.getPassword(), user.getDescription()};
-            int[] types = new int[] {Types.VARCHAR, Types.VARCHAR, Types.VARCHAR};
-            jdbcTemplate.update(properties.getProperty("user.addUser"), params, types);
-            int id = jdbcTemplate.queryForObject(properties.getProperty("selectMaxId"), Integer.class);
-            user.setUserId(id);
-            return id;
-
-        }catch(Exception e){
-            LOGGER.warn("Exception in method addUser({})", user, e);
-            throw e;
-        }
+        LOGGER.debug("addUser(user): login = {}", user.getLogin());
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        MapSqlParameterSource parameterSource = new MapSqlParameterSource();
+        parameterSource.addValue(USER_ID, user.getUserId());
+        parameterSource.addValue(LOGIN, user.getLogin());
+        parameterSource.addValue(PASSWORD, user.getPassword());
+        parameterSource.addValue(DESCRIPTION, user.getDescription());
+        namedParameterJdbcTemplate.update(insertUserSql, parameterSource, keyHolder);
+        return keyHolder.getKey().intValue();
     }
 
     @Override
-    public void updateUser(User user) {
-        LOGGER.debug("updateUser({})", user);
-        try{
-            jdbcTemplate.update(String.format(properties.getProperty("user.update"),
-                    user.getLogin(), user.getPassword(),
-                    user.getDescription(), user.getUserId()));
-        }catch (Exception e) {
-            LOGGER.warn("Exception in method updateUser({})", user, e);
-            throw e;
-        }
+    public int updateUser(User user) {
+        LOGGER.debug("update user {}", user);
+        Map<String, Object> params = new HashMap<>();
+        params.put(USER_ID, user.getUserId());
+        params.put(LOGIN, user.getLogin());
+        params.put(PASSWORD, user.getPassword());
+        params.put(DESCRIPTION, user.getDescription());
+        return namedParameterJdbcTemplate.update(updateUserSql, params);
+
     }
 
     @Override
-    public void deleteUser(Integer userId) {
-        LOGGER.debug("deleteUser({})", userId);
-        try{
-            jdbcTemplate.update(String.format(properties.getProperty("user.delete"), userId));
-        }catch (Exception e) {
-            LOGGER.warn("Exception in method deleteUser({})", userId, e);
-            throw e;
-        }
+    public int deleteUser(Integer userId) {
+        LOGGER.debug("delete user with id = {}", userId);
+        Map<String, Object> params = new HashMap<>();
+        params.put(USER_ID, userId);
+        return namedParameterJdbcTemplate.update(deleteUserSql, params);
     }
 
     private class UserRowMapper implements RowMapper<User> {

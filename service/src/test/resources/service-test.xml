@@ -19,4 +19,8 @@
         <constructor-arg ref="dataSource"/>
     </bean>
 
+    <bean id="userService" class="com.epam.test.service.UserServiceImpl">
+        <property name="userDao" ref="userDao"/>
+    </bean>
+
 </beans>
