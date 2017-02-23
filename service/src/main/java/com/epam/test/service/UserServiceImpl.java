@@ -57,12 +57,17 @@ public class UserServiceImpl implements UserService {
         Assert.isNull(user.getUserId(), "User Id should be null.");
         Assert.hasText(user.getLogin(), "User login should not be null.");
         Assert.hasText(user.getPassword(), "User password should not be null.");
-        try {
-            getUserByLogin(user.getLogin());
-        } catch (Exception e){
-            return userDao.addUser(user);
+        Assert.isTrue(!doesLoginExist(user.getLogin()), "User with this login already exists");
+        return userDao.addUser(user);
+    }
+
+    private boolean doesLoginExist(String login) {
+        try{
+            getUserByLogin(login);
+            return true;
+        }catch (Exception e){
+            return false;
         }
-        throw new IllegalArgumentException("Login is already exists");
     }
 
     @Override
@@ -72,14 +77,8 @@ public class UserServiceImpl implements UserService {
         Assert.notNull(user.getUserId(), "User Id should not be null.");
         Assert.hasText(user.getLogin(), "User login should not be null.");
         Assert.hasText(user.getPassword(), "User password should not be null.");
-        try {
-            getUserByLogin(user.getLogin());
-        } catch (Exception e){
-            return userDao.updateUser(user);
-//            if(i==0) throw new IllegalArgumentException("User with this id does not exist");
-
-        }
-        throw new IllegalArgumentException("Login is already exists");
+        Assert.isTrue(!doesLoginExist(user.getLogin()), "User with this login already exists");
+        return userDao.updateUser(user);
     }
 
     @Override
