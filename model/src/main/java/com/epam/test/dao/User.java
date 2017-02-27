@@ -1,5 +1,7 @@
 package com.epam.test.dao;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+
 import java.util.Objects;
 
 /**
