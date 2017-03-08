@@ -1,6 +1,7 @@
 package com.epam.result;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 import java.util.Objects;
 
@@ -10,35 +11,35 @@ import java.util.Objects;
  */
 public class Movie {
 
-    private int movieID;
+    private Integer movieID;
     private String movieTitle;
-    private DateTime releaseDate;
-    private byte rating;
-    private Director director;
+    private LocalDate releaseDate;
+    private Double rating;
+    private Integer id_movie_director;
 
     public Movie() {
     }
 
-    public Movie(String movieTitle, DateTime releaseDate, byte rating, Director director) {
+    public Movie(String movieTitle, LocalDate releaseDate, Double rating, Integer id_movie_director) {
         this.movieTitle = movieTitle;
         this.releaseDate = releaseDate;
         this.rating = rating;
-        this.director = director;
+        this.id_movie_director = id_movie_director;
     }
 
-    public Movie(int movieID, String movieTitle, DateTime releaseDate, byte rating, Director director) {
+    public Movie(int movieID, String movieTitle, LocalDate releaseDate, Double rating, Integer id_movie_director) {
         this.movieID = movieID;
         this.movieTitle = movieTitle;
         this.releaseDate = releaseDate;
         this.rating = rating;
-        this.director = director;
+        this.id_movie_director = id_movie_director;
     }
 
-    public int getMovieID() {
+    public Integer getMovieID() {
         return movieID;
     }
 
-    public void setMovieID(int movieID) {
+    public void setMovieID(Integer movieID) {
         this.movieID = movieID;
     }
 
@@ -50,28 +51,28 @@ public class Movie {
         this.movieTitle = movieTitle;
     }
 
-    public DateTime getReleaseDate() {
+    public LocalDate getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(DateTime releaseDate) {
+    public void setReleaseDate(LocalDate releaseDate) {
         this.releaseDate = releaseDate;
     }
 
-    public byte getRating() {
+    public Double getRating() {
         return rating;
     }
 
-    public void setRating(byte rating) {
+    public void setRating(Double rating) {
         this.rating = rating;
     }
 
-    public Director getDirector() {
-        return director;
+    public Integer getId_movie_director() {
+        return id_movie_director;
     }
 
-    public void setDirector(Director director) {
-        this.director = director;
+    public void setId_movie_director(Integer id_movie_director) {
+        this.id_movie_director = id_movie_director;
     }
 
     @Override
@@ -79,16 +80,16 @@ public class Movie {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Movie movie = (Movie) o;
-        return movieID == movie.movieID &&
-                rating == movie.rating &&
+        return Objects.equals(movieID, movie.movieID) &&
                 Objects.equals(movieTitle, movie.movieTitle) &&
                 Objects.equals(releaseDate, movie.releaseDate) &&
-                Objects.equals(director, movie.director);
+                Objects.equals(rating, movie.rating) &&
+                Objects.equals(id_movie_director, movie.id_movie_director);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(movieID, movieTitle, releaseDate, rating, director);
+        return Objects.hash(movieID, movieTitle, releaseDate, rating, id_movie_director);
     }
 
     @Override
@@ -98,7 +99,7 @@ public class Movie {
                 ", movieTitle='" + movieTitle + '\'' +
                 ", releaseDate=" + releaseDate +
                 ", rating=" + rating +
-                ", director=" + director +
+                ", id_movie_director=" + id_movie_director +
                 '}';
     }
 }

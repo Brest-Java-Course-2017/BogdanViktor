@@ -7,9 +7,10 @@ import java.util.Objects;
  */
 public class Director {
 
+    private Integer directorID;
+
     private String firstName;
     private String lastName;
-    private int directorID;
 
     public Director() {
     }
@@ -19,7 +20,7 @@ public class Director {
         this.lastName = lastName;
     }
 
-    public Director(String firstName, String lastName, int directorID) {
+    public Director(Integer directorID, String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.directorID = directorID;
@@ -41,11 +42,11 @@ public class Director {
         this.lastName = lastName;
     }
 
-    public int getDirectorID() {
+    public Integer getDirectorID() {
         return directorID;
     }
 
-    public void setDirectorID(int directorID) {
+    public void setDirectorID(Integer directorID) {
         this.directorID = directorID;
     }
 
@@ -64,12 +65,13 @@ public class Director {
         return Objects.hash(firstName, lastName, directorID);
     }
 
+
     @Override
     public String toString() {
         return "Director{" +
-                "firstName='" + firstName + '\'' +
+                "directorID=" + directorID +
+                ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", DirectorID=" + directorID +
                 '}';
     }
 }
