@@ -5,6 +5,7 @@
 package com.epam.result;
 
 import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.springframework.dao.DataAccessException;
 
 import java.util.List;
@@ -23,6 +24,8 @@ public interface MovieAndDirectorDAO {
 
     List<DirectorDTO> getAllDirectorsWithMovieRating() throws DataAccessException;
 
+    Director getDirectorByFirstAndLastName(String firstName, String lastName) throws DataAccessException;
+
     int addDirector(Director director) throws DataAccessException;
 
     Director getDirectorById(Integer id);
@@ -33,11 +36,13 @@ public interface MovieAndDirectorDAO {
 
     List<Movie> getAllMovieByDirector(Integer directorID) throws DataAccessException;
 
+    Movie getMovieByTitleAndReleaseDate(String movieTitle, LocalDate date) throws DataAccessException;
+
     List<Movie> getAllMovies() throws DataAccessException;
 
     List<MovieDTO> getAllMoviesWithDirectorName() throws DataAccessException;
 
-    List<Movie> getAllMoviesWithDateFilter(DateTime from, DateTime to) throws DataAccessException;
+    List<Movie> getAllMoviesWithDateFilter(LocalDate from, LocalDate to) throws DataAccessException;
 
     int addMovie(Movie movie) throws DataAccessException;
 

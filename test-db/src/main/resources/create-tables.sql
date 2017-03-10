@@ -11,6 +11,6 @@ CREATE TABLE IF NOT EXISTS movie (
   movie_title VARCHAR(150) NOT NULL,
   release_date DATE NOT NULL,
   rating DOUBLE Not NULL,
-  id_movie_director int,
+  movie_director_id int,
   PRIMARY KEY (movie_id),
-  FOREIGN KEY (id_movie_director) REFERENCES director (director_id)  );
+  FOREIGN KEY (movie_director_id) REFERENCES director (director_id)  );

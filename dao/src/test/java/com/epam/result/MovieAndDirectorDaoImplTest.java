@@ -2,6 +2,9 @@ package com.epam.result;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,6 +24,8 @@ import java.util.List;
 @Transactional
 public class MovieAndDirectorDaoImplTest{
     private static final Logger LOGGER = LogManager.getLogger();
+    private static final DateTimeFormatter FORMATTER = DateTimeFormat.forPattern("yyyy-MM-dd");
+
 
     private static final Director testDirector = new Director("testFirstName", "testLastName");
 
@@ -93,5 +98,69 @@ public class MovieAndDirectorDaoImplTest{
         LOGGER.debug("getAllMovieByDirector()");
         List<Movie> list = movieAndDirectorDAO.getAllMovieByDirector(1);
         Assert.assertEquals(3, list.size());
+    }
+
+    @Test
+    public void testAddMovie(){
+        LOGGER.debug("AddMovie()");
+
+        int initialSize =movieAndDirectorDAO.getAllMovies().size();
+        Movie newMovie = new Movie(null, "title movie", new LocalDate(), 7.0, 1);
+        movieAndDirectorDAO.addMovie(newMovie);
+        List<Movie> list = movieAndDirectorDAO.getAllMovies();
+        Assert.assertEquals(initialSize+1, list.size());
+    }
+
+    @Test
+    public void testUpdateMovie(){
+        LOGGER.debug("updateMovie()");
+
+        Movie newMovie = new Movie(2, "title movie", new LocalDate(), 7.0, 1);
+        movieAndDirectorDAO.updateMovie(newMovie);
+        List<Movie> list = movieAndDirectorDAO.getAllMovies();
+        Assert.assertEquals(newMovie, movieAndDirectorDAO.getAllMovies().get(1));
+    }
+
+    @Test
+    public void testDeleteMovie(){
+        LOGGER.debug("deleteMovie()");
+
+        List<Movie> list = movieAndDirectorDAO.getAllMovies();
+        int initialSize= list.size();
+        movieAndDirectorDAO.deleteMovie(2);
+        Assert.assertEquals(initialSize-1, movieAndDirectorDAO.getAllMovies().size());
+    }
+
+    @Test
+    public void testGetAllMoviesWithDateFilter(){
+        LOGGER.debug("getAllMoviesWithDateFilter()");
+
+        LocalDate fromDate = FORMATTER.parseLocalDate("2000-06-08");
+        LocalDate toDate = new LocalDate();
+        List<Movie> list = movieAndDirectorDAO.getAllMoviesWithDateFilter(fromDate, toDate);
+        Assert.assertEquals(7, list.size());
+    }
+
+    @Test
+    public void testGetDirectorByFirstAndLastName(){
+        LOGGER.debug("getDirectorByFirstAndLastName()");
+
+        String firstName = "StEveN";
+        String lastName = "SpieLBerg";
+
+        Assert.assertEquals(movieAndDirectorDAO.getDirectorById(1),
+                movieAndDirectorDAO.getDirectorByFirstAndLastName(firstName, lastName));
+    }
+
+    @Test
+    public void testGetMovieByTitleAndReleaseDate(){
+        LOGGER.debug("getMovieByTitleAndReleaseDate()");
+        /*'The Lord of the Rings: The Fellowship of the Ring', '2001-12-19'*/
+
+        String movieTitle = "The Lord of the Rings: The FelloWShip of the Ring";
+        LocalDate date = FORMATTER.parseLocalDate("2001-12-19");
+
+        Assert.assertEquals(movieAndDirectorDAO.getAllMovies().get(7),
+                movieAndDirectorDAO.getMovieByTitleAndReleaseDate(movieTitle, date));
     }
 }

@@ -1,7 +1,8 @@
 package com.epam.result;
 
-import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import java.util.Objects;
 
@@ -15,24 +16,24 @@ public class Movie {
     private String movieTitle;
     private LocalDate releaseDate;
     private Double rating;
-    private Integer id_movie_director;
+    private Integer movieDirectorID;
 
     public Movie() {
     }
 
-    public Movie(String movieTitle, LocalDate releaseDate, Double rating, Integer id_movie_director) {
+    public Movie(String movieTitle, LocalDate releaseDate, Double rating, Integer movieDirectorID) {
         this.movieTitle = movieTitle;
         this.releaseDate = releaseDate;
         this.rating = rating;
-        this.id_movie_director = id_movie_director;
+        this.movieDirectorID = movieDirectorID;
     }
 
-    public Movie(int movieID, String movieTitle, LocalDate releaseDate, Double rating, Integer id_movie_director) {
+    public Movie(Integer movieID, String movieTitle, LocalDate releaseDate, Double rating, Integer movieDirectorID) {
         this.movieID = movieID;
         this.movieTitle = movieTitle;
         this.releaseDate = releaseDate;
         this.rating = rating;
-        this.id_movie_director = id_movie_director;
+        this.movieDirectorID = movieDirectorID;
     }
 
     public Integer getMovieID() {
@@ -59,6 +60,11 @@ public class Movie {
         this.releaseDate = releaseDate;
     }
 
+    public String getReleaseDateAsString() {
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
+        return getReleaseDate().toString(formatter);
+    }
+
     public Double getRating() {
         return rating;
     }
@@ -67,12 +73,12 @@ public class Movie {
         this.rating = rating;
     }
 
-    public Integer getId_movie_director() {
-        return id_movie_director;
+    public Integer getMovieDirectorID() {
+        return movieDirectorID;
     }
 
-    public void setId_movie_director(Integer id_movie_director) {
-        this.id_movie_director = id_movie_director;
+    public void setMovieDirectorID(Integer movieDirectorID) {
+        this.movieDirectorID = movieDirectorID;
     }
 
     @Override
@@ -84,12 +90,12 @@ public class Movie {
                 Objects.equals(movieTitle, movie.movieTitle) &&
                 Objects.equals(releaseDate, movie.releaseDate) &&
                 Objects.equals(rating, movie.rating) &&
-                Objects.equals(id_movie_director, movie.id_movie_director);
+                Objects.equals(movieDirectorID, movie.movieDirectorID);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(movieID, movieTitle, releaseDate, rating, id_movie_director);
+        return Objects.hash(movieID, movieTitle, releaseDate, rating, movieDirectorID);
     }
 
     @Override
@@ -99,7 +105,9 @@ public class Movie {
                 ", movieTitle='" + movieTitle + '\'' +
                 ", releaseDate=" + releaseDate +
                 ", rating=" + rating +
-                ", id_movie_director=" + id_movie_director +
+                ", movieDirectorID=" + movieDirectorID +
                 '}';
     }
+
+
 }
