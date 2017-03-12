@@ -1,4 +1,4 @@
-package com.epam.result;
+package com.epam.result.dao;
 
 import java.util.Objects;
 
@@ -57,5 +57,31 @@ public class DirectorDTO {
 
     public void setAvarageRating(double avarageRating) {
         this.avarageRating = avarageRating;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DirectorDTO that = (DirectorDTO) o;
+        return Double.compare(that.avarageRating, avarageRating) == 0 &&
+                Objects.equals(directorID, that.directorID) &&
+                Objects.equals(firstName, that.firstName) &&
+                Objects.equals(lastName, that.lastName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(directorID, firstName, lastName, avarageRating);
+    }
+
+    @Override
+    public String toString() {
+        return "DirectorDTO{" +
+                "directorID=" + directorID +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", avarageRating=" + avarageRating +
+                '}';
     }
 }

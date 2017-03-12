@@ -1,4 +1,4 @@
-package com.epam.result;
+package com.epam.result.dao;
 
 import java.util.Objects;
 

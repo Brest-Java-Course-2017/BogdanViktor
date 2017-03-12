@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns="http://www.springframework.org/schema/beans"
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
@@ -15,12 +15,20 @@
         </property>
     </bean>
 
-    <bean id="DirectorDao" class="com.epam.result.dao.DirectorDaoImpl">
+    <bean id="directorDao" class="com.epam.result.dao.DirectorDaoImpl">
         <constructor-arg ref="dataSource"/>
     </bean>
 
-    <bean id="MovieDao" class="com.epam.result.dao.MovieDaoImpl">
+    <bean id="directorService" class="com.epam.result.service.DirectorServiceImpl">
+        <property name="directorDao" ref="directorDao"/>
+    </bean>
+
+    <bean id="movieDao" class="com.epam.result.dao.MovieDaoImpl">
         <constructor-arg ref="dataSource"/>
+    </bean>
+
+    <bean id="movieService" class="com.epam.result.service.MovieServiceImpl">
+        <property name="movieDao" ref="movieDao"/>
     </bean>
 
 </beans>

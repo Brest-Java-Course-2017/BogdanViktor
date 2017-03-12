@@ -1,4 +1,4 @@
-package com.epam.result;
+package com.epam.result.dao;
 
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;

@@ -1,4 +1,4 @@
-package com.epam.result;
+package com.epam.result.dao;
 
 import org.joda.time.LocalDate;
 
@@ -75,5 +75,35 @@ public class MovieDTO {
 
     public void setDirectorsLastName(String directorsLastName) {
         this.directorsLastName = directorsLastName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MovieDTO movieDTO = (MovieDTO) o;
+        return Objects.equals(movieID, movieDTO.movieID) &&
+                Objects.equals(movieTitle, movieDTO.movieTitle) &&
+                Objects.equals(releaseDate, movieDTO.releaseDate) &&
+                Objects.equals(rating, movieDTO.rating) &&
+                Objects.equals(directorsFirstName, movieDTO.directorsFirstName) &&
+                Objects.equals(directorsLastName, movieDTO.directorsLastName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(movieID, movieTitle, releaseDate, rating, directorsFirstName, directorsLastName);
+    }
+
+    @Override
+    public String toString() {
+        return "MovieDTO{" +
+                "movieID=" + movieID +
+                ", movieTitle='" + movieTitle + '\'' +
+                ", releaseDate=" + releaseDate +
+                ", rating=" + rating +
+                ", directorsFirstName='" + directorsFirstName + '\'' +
+                ", directorsLastName='" + directorsLastName + '\'' +
+                '}';
     }
 }
