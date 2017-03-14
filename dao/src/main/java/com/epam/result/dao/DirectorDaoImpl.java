@@ -1,8 +1,5 @@
 package com.epam.result.dao;
 
-import com.epam.result.dao.Director;
-import com.epam.result.dao.DirectorDAO;
-import com.epam.result.dao.DirectorDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
@@ -101,7 +98,7 @@ public class DirectorDaoImpl implements DirectorDAO {
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
-        parameterSource.addValue(DIRECTOR_ID, director.getDirectorID());
+        parameterSource.addValue(DIRECTOR_ID, director.getDirectorId());
         parameterSource.addValue(FIRST_NAME, director.getFirstName());
         parameterSource.addValue(LAST_NAME, director.getLastName());
         namedParameterJdbcTemplate.update(insertDirectorSQL, parameterSource, keyHolder);
@@ -112,7 +109,7 @@ public class DirectorDaoImpl implements DirectorDAO {
     public int updateDirector(Director director) throws DataAccessException {
         LOGGER.debug("updateDirector({})", director.getFirstName()+" "+director.getLastName());
         Map<String, Object> params = new HashMap<>();
-        params.put(DIRECTOR_ID, director.getDirectorID());
+        params.put(DIRECTOR_ID, director.getDirectorId());
         params.put(FIRST_NAME, director.getFirstName());
         params.put(LAST_NAME, director.getLastName());
         return namedParameterJdbcTemplate.update(updateDirectorSQL, params);

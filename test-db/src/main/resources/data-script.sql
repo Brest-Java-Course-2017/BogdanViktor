@@ -9,7 +9,7 @@ VALUES
 --    movieTitle VARCHAR(150) NOT NULL,
 --   releaseDate DATE NOT NULL,
 --   rating INT NULL DEFAULT 0,
---   movieDirectorID int,
+--   movieDirectorId int,
 INSERT INTO movie (movie_title, release_date, rating, movie_director_id)
 VALUES
   ('Saving Private Ryan', '1998-07-24', 8.6, 1),

@@ -18,19 +18,49 @@ import java.util.List;
 public class DirectorRestController {
     private static final Logger LOGGER = LogManager.getLogger();
 
+    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
+    @ExceptionHandler({IllegalArgumentException.class})
+    public String incorrectDataError(){
+        return "{  \"response\" : \"Incorrect Data Error\' }";
+    }
+
     @Autowired
     private DirectorService directorService;
 
+    //curl -v localhost:8088/directors
     @RequestMapping(value = "/directors", method = RequestMethod.GET)
     public @ResponseBody List<DirectorDTO> getAllDirectorsWithMoviesRating(){
         LOGGER.debug("getAllDirectorsWithMoviesRating()");
         return directorService.getAllDirectorsWithMovieRating();
     }
 
-    @RequestMapping(value = "/director/{directorID}", method = RequestMethod.GET)
-    public @ResponseBody Director getDirectorById(@PathVariable(value = "directorID") Integer directorID){
-        LOGGER.debug("getDirectorById({})", directorID);
-        return directorService.getDirectorById(directorID);
+    //curl -v localhost:8088/director/1
+    @RequestMapping(value = "/director/{directorId}", method = RequestMethod.GET)
+    public @ResponseBody Director getDirectorById(@PathVariable(value = "directorId") Integer directorId){
+        LOGGER.debug("getDirectorById({})", directorId);
+        return directorService.getDirectorById(directorId);
     }
 
+    /*
+    curl -H "Content-Type: application/json" -X POST -d '{"firstName":"xyz","re":"testName"}' -v localhost:8088/director
+     */
+    @RequestMapping(value = "/director", method = RequestMethod.POST)
+    public @ResponseBody Integer addDirector(@RequestBody Director director){
+        LOGGER.debug("addDirector({})", director.getFirstName()+" "+director.getLastName());
+        return directorService.addDirector(director);
+    }
+
+    // curl -H "Content-Type: application/json" -X PUT -d '{"directorId":"2","firstName":"xyz","lastName":"testName"}' -v localhost:8088/director
+    @RequestMapping(value = "/director", method = RequestMethod.PUT)
+    public void updateDirector(@RequestBody Director director){
+        LOGGER.debug("updateDirector({})", director.getFirstName()+" "+director.getLastName());
+        directorService.updateDirector(director);
+    }
+
+    //curl -X DELETE -v localhost:8088/director/5
+    @RequestMapping(value = "/director/{directorId}", method = RequestMethod.DELETE)
+    public void deleteDirectorById(@PathVariable(value = "directorId") Integer directorId){
+        LOGGER.debug("deleteDirectorById({})", directorId);
+        directorService.deleteDirector(directorId);
+    }
 }

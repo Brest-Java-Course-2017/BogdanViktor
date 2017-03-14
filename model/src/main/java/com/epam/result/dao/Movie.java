@@ -1,9 +1,8 @@
 package com.epam.result.dao;
 
-import org.joda.time.LocalDate;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 
@@ -12,36 +11,41 @@ import java.util.Objects;
  */
 public class Movie {
 
-    private Integer movieID;
+    private Integer movieId;
     private String movieTitle;
-    private LocalDate releaseDate;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private Date releaseDate;
     private Double rating;
-    private Integer movieDirectorID;
+    private Integer movieDirectorId;
+
+    private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd");
+
 
     public Movie() {
     }
 
-    public Movie(String movieTitle, LocalDate releaseDate, Double rating, Integer movieDirectorID) {
+    public Movie(String movieTitle, Date releaseDate, Double rating, Integer movieDirectorId) {
         this.movieTitle = movieTitle;
         this.releaseDate = releaseDate;
         this.rating = rating;
-        this.movieDirectorID = movieDirectorID;
+        this.movieDirectorId = movieDirectorId;
     }
 
-    public Movie(Integer movieID, String movieTitle, LocalDate releaseDate, Double rating, Integer movieDirectorID) {
-        this.movieID = movieID;
+    public Movie(Integer movieId, String movieTitle, Date releaseDate, Double rating, Integer movieDirectorId) {
+        this.movieId = movieId;
         this.movieTitle = movieTitle;
         this.releaseDate = releaseDate;
         this.rating = rating;
-        this.movieDirectorID = movieDirectorID;
+        this.movieDirectorId = movieDirectorId;
     }
 
-    public Integer getMovieID() {
-        return movieID;
+    public Integer getMovieId() {
+        return movieId;
     }
 
-    public void setMovieID(Integer movieID) {
-        this.movieID = movieID;
+    public void setMovieId(Integer movieId) {
+        this.movieId = movieId;
     }
 
     public String getMovieTitle() {
@@ -52,17 +56,16 @@ public class Movie {
         this.movieTitle = movieTitle;
     }
 
-    public LocalDate getReleaseDate() {
+    public Date getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(LocalDate releaseDate) {
+    public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
     }
 
     public String getReleaseDateAsString() {
-        DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
-        return getReleaseDate().toString(formatter);
+        return FORMATTER.format(releaseDate);
     }
 
     public Double getRating() {
@@ -73,12 +76,12 @@ public class Movie {
         this.rating = rating;
     }
 
-    public Integer getMovieDirectorID() {
-        return movieDirectorID;
+    public Integer getMovieDirectorId() {
+        return movieDirectorId;
     }
 
-    public void setMovieDirectorID(Integer movieDirectorID) {
-        this.movieDirectorID = movieDirectorID;
+    public void setMovieDirectorId(Integer movieDirectorId) {
+        this.movieDirectorId = movieDirectorId;
     }
 
     @Override
@@ -86,26 +89,26 @@ public class Movie {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Movie movie = (Movie) o;
-        return Objects.equals(movieID, movie.movieID) &&
+        return Objects.equals(movieId, movie.movieId) &&
                 Objects.equals(movieTitle, movie.movieTitle) &&
                 Objects.equals(releaseDate, movie.releaseDate) &&
                 Objects.equals(rating, movie.rating) &&
-                Objects.equals(movieDirectorID, movie.movieDirectorID);
+                Objects.equals(movieDirectorId, movie.movieDirectorId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(movieID, movieTitle, releaseDate, rating, movieDirectorID);
+        return Objects.hash(movieId, movieTitle, releaseDate, rating, movieDirectorId);
     }
 
     @Override
     public String toString() {
         return "Movie{" +
-                "movieID=" + movieID +
+                "movieId=" + movieId +
                 ", movieTitle='" + movieTitle + '\'' +
-                ", releaseDate=" + releaseDate +
+                ", releaseDate=" + FORMATTER.format(releaseDate) +
                 ", rating=" + rating +
-                ", movieDirectorID=" + movieDirectorID +
+                ", movieDirectorId=" + movieDirectorId +
                 '}';
     }
 

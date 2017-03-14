@@ -45,7 +45,7 @@ public class DirectorServiceImpl implements DirectorService{
     public int addDirector(Director director) throws DataAccessException {
         Assert.notNull(director, "Director should not be null.");
         LOGGER.debug("addDirector({})", director.getFirstName()+" "+director.getLastName());
-        Assert.isNull(director.getDirectorID(), "Director's ID should be null.");
+        Assert.isNull(director.getDirectorId(), "Director's ID should be null.");
         Assert.hasText(director.getFirstName(), "Director's first name should not be null");
         Assert.hasText(director.getLastName(), "Director's last name should not be null");
         try{
@@ -69,7 +69,7 @@ public class DirectorServiceImpl implements DirectorService{
     public void updateDirector(Director director) throws DataAccessException {
         Assert.notNull(director, "Director should not be null.");
         LOGGER.debug("updateDirector({})", director.getFirstName()+" "+director.getLastName());
-        Assert.notNull(director.getDirectorID(), "Director's ID should not be null.");
+        Assert.notNull(director.getDirectorId(), "Director's ID should not be null.");
         Assert.hasText(director.getFirstName(), "Director's first name should not be null");
         Assert.hasText(director.getLastName(), "Director's last name should not be null");
         try{
@@ -81,7 +81,7 @@ public class DirectorServiceImpl implements DirectorService{
         } catch (DataAccessException e){  }
         int numberOfRowsAffected = directorDao.updateDirector(director);
         if(numberOfRowsAffected==0) throw new IllegalArgumentException(String.format(
-                "The director with ID=%d does not exist in the database.", director.getDirectorID()));
+                "The director with ID=%d does not exist in the database.", director.getDirectorId()));
     }
 
     @Override

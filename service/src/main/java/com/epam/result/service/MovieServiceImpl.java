@@ -5,13 +5,11 @@ import com.epam.result.dao.MovieDAO;
 import com.epam.result.dao.MovieDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.joda.time.LocalDate;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.util.Assert;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,9 +17,8 @@ import java.util.List;
  */
 public class MovieServiceImpl implements MovieService{
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final DateTimeFormatter FORMATTER = DateTimeFormat.forPattern("yyyy-MM-dd");
-    private static final LocalDate MIN_DATE = FORMATTER.parseLocalDate("1000-01-01");
-    private static final LocalDate MAX_DATE = FORMATTER.parseLocalDate("9999-12-31");
+    private static final Date MIN_DATE = new Date(1000-1900,01,01);
+    private static final Date MAX_DATE = new Date(9999-1900,12,31);
 
 
     @Autowired
@@ -51,22 +48,32 @@ public class MovieServiceImpl implements MovieService{
     }
 
     @Override
-    public List<MovieDTO> getAllMoviesWithDateFilter(LocalDate fromDate, LocalDate toDate) throws DataAccessException {
+    public List<MovieDTO> getAllMoviesWithDateFilter(Date fromDate, Date toDate) throws DataAccessException {
         LOGGER.debug("getAllMoviesWithDateFilter({})");
         if(fromDate==null && toDate==null) return movieDao.getAllMoviesWithDirectorName();
         if(fromDate==null) fromDate = MIN_DATE;
         if(toDate==null) toDate = MAX_DATE;
+        Assert.isTrue(toDate.compareTo(fromDate)>0, "The date in the beginning should be greater than at the end");
         return movieDao.getAllMoviesWithDateFilter(fromDate, toDate);
+    }
+
+    @Override
+    public Movie getMovieById(Integer movieId) throws DataAccessException {
+        LOGGER.debug("getMovieById({})", movieId);
+        Assert.notNull(movieId, "Movie ID should not be null.");
+        return movieDao.getMovieById(movieId);
     }
 
     @Override
     public int addMovie(Movie movie) throws DataAccessException {
         Assert.notNull(movie, "Movie should not be null.");
         LOGGER.debug("addMovie({})", movie.getMovieTitle()+", "+movie.getReleaseDateAsString());
-        Assert.isNull(movie.getMovieID(), "Movie ID should be null.");
+        Assert.isNull(movie.getMovieId(), "Movie ID should be null.");
         Assert.hasText(movie.getMovieTitle(), "Movie title should not be null");
         Assert.notNull(movie.getReleaseDate(), "Movie release date should not be null");
-        Assert.notNull(movie.getMovieDirectorID(), "Movie director's ID should not be null");
+        Assert.isTrue(movie.getReleaseDate().compareTo(MIN_DATE)>0, "The release date should be greater than 1000-01-01");
+        Assert.isTrue(movie.getReleaseDate().compareTo(new Date())<0, "The release date should not be greater than today's date");
+        Assert.notNull(movie.getMovieDirectorId(), "Movie director's ID should not be null");
         Assert.notNull(movie.getRating(), "Movie rating should not be null");
         Assert.isTrue(movie.getRating()>=0 && movie.getRating()<=10, "Movie rating should be from 0 to 10");
         try{
@@ -83,10 +90,10 @@ public class MovieServiceImpl implements MovieService{
     public void updateMovie(Movie movie) throws DataAccessException {
         Assert.notNull(movie, "Movie should not be null.");
         LOGGER.debug("updateMovie({})", movie.getMovieTitle()+", "+movie.getReleaseDateAsString());
-        Assert.notNull(movie.getMovieID(), "Movie ID should not be null.");
+        Assert.notNull(movie.getMovieId(), "Movie ID should not be null.");
         Assert.hasText(movie.getMovieTitle(), "Movie title should not be null");
         Assert.notNull(movie.getReleaseDate(), "Movie release date should not be null");
-        Assert.notNull(movie.getMovieDirectorID(), "Movie director's ID should not be null");
+        Assert.notNull(movie.getMovieDirectorId(), "Movie director's ID should not be null");
         try{
             if(movieDao.getMovieByTitleAndReleaseDate(movie.getMovieTitle(), movie.getReleaseDate())!=null){
                 throw new IllegalArgumentException(String.format(
@@ -96,7 +103,7 @@ public class MovieServiceImpl implements MovieService{
         } catch (DataAccessException e){  }
         int numberOfRowsAffected = movieDao.updateMovie(movie);
         if(numberOfRowsAffected==0) throw new IllegalArgumentException(String.format(
-                "The movie with ID=%d does not exist in the database.", movie.getMovieID()));
+                "The movie with ID=%d does not exist in the database.", movie.getMovieId()));
     }
 
     @Override

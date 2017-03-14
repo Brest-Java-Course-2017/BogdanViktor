@@ -4,9 +4,9 @@
 
 package com.epam.result.dao;
 
-import org.joda.time.LocalDate;
 import org.springframework.dao.DataAccessException;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,13 +21,15 @@ public interface MovieDAO {
      */
     List<Movie> getAllMoviesCreatedByDirector(Integer directorID) throws DataAccessException;
 
-    Movie getMovieByTitleAndReleaseDate(String movieTitle, LocalDate date) throws DataAccessException;
+    Movie getMovieByTitleAndReleaseDate(String movieTitle, Date date) throws DataAccessException;
 
     List<Movie> getAllMovies() throws DataAccessException;
 
     List<MovieDTO> getAllMoviesWithDirectorName() throws DataAccessException;
 
-    List<MovieDTO> getAllMoviesWithDateFilter(LocalDate from, LocalDate to) throws DataAccessException;
+    List<MovieDTO> getAllMoviesWithDateFilter(Date from, Date to) throws DataAccessException;
+
+    Movie getMovieById(Integer movieID) throws DataAccessException;
 
     int addMovie(Movie movie) throws DataAccessException;
 

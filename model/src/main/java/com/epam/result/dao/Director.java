@@ -7,7 +7,7 @@ import java.util.Objects;
  */
 public class Director {
 
-    private Integer directorID;
+    private Integer directorId;
 
     private String firstName;
     private String lastName;
@@ -20,10 +20,10 @@ public class Director {
         this.lastName = lastName;
     }
 
-    public Director(Integer directorID, String firstName, String lastName) {
+    public Director(Integer directorId, String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.directorID = directorID;
+        this.directorId = directorId;
     }
 
     public String getFirstName() {
@@ -42,12 +42,12 @@ public class Director {
         this.lastName = lastName;
     }
 
-    public Integer getDirectorID() {
-        return directorID;
+    public Integer getDirectorId() {
+        return directorId;
     }
 
-    public void setDirectorID(Integer directorID) {
-        this.directorID = directorID;
+    public void setDirectorId(Integer directorId) {
+        this.directorId = directorId;
     }
 
     @Override
@@ -55,21 +55,21 @@ public class Director {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Director Director = (Director) o;
-        return directorID == Director.directorID &&
+        return directorId == Director.directorId &&
                 Objects.equals(firstName, Director.firstName) &&
                 Objects.equals(lastName, Director.lastName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstName, lastName, directorID);
+        return Objects.hash(firstName, lastName, directorId);
     }
 
 
     @Override
     public String toString() {
         return "Director{" +
-                "directorID=" + directorID +
+                "directorId=" + directorId +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 '}';

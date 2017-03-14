@@ -1,7 +1,9 @@
 package com.epam.result.dao;
 
-import org.joda.time.LocalDate;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 
@@ -10,18 +12,23 @@ import java.util.Objects;
  */
 public class MovieDTO {
 
-    private Integer movieID;
+    private Integer movieId;
     private String movieTitle;
-    private LocalDate releaseDate;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private Date releaseDate;
     private Double rating;
     private String directorsFirstName;
     private String directorsLastName;
 
+    private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd");
+
+
     public MovieDTO() {
     }
 
-    public MovieDTO(Integer movieID, String movieTitle, LocalDate releaseDate, Double rating, String directorsFirstName, String directorsLastName) {
-        this.movieID = movieID;
+    public MovieDTO(Integer movieId, String movieTitle, Date releaseDate, Double rating, String directorsFirstName, String directorsLastName) {
+        this.movieId = movieId;
         this.movieTitle = movieTitle;
         this.releaseDate = releaseDate;
         this.rating = rating;
@@ -29,12 +36,12 @@ public class MovieDTO {
         this.directorsLastName = directorsLastName;
     }
 
-    public Integer getMovieID() {
-        return movieID;
+    public Integer getMovieId() {
+        return movieId;
     }
 
-    public void setMovieID(Integer movieID) {
-        this.movieID = movieID;
+    public void setMovieId(Integer movieId) {
+        this.movieId = movieId;
     }
 
     public String getMovieTitle() {
@@ -45,11 +52,11 @@ public class MovieDTO {
         this.movieTitle = movieTitle;
     }
 
-    public LocalDate getReleaseDate() {
+    public Date getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(LocalDate releaseDate) {
+    public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
     }
 
@@ -82,7 +89,7 @@ public class MovieDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MovieDTO movieDTO = (MovieDTO) o;
-        return Objects.equals(movieID, movieDTO.movieID) &&
+        return Objects.equals(movieId, movieDTO.movieId) &&
                 Objects.equals(movieTitle, movieDTO.movieTitle) &&
                 Objects.equals(releaseDate, movieDTO.releaseDate) &&
                 Objects.equals(rating, movieDTO.rating) &&
@@ -92,15 +99,15 @@ public class MovieDTO {
 
     @Override
     public int hashCode() {
-        return Objects.hash(movieID, movieTitle, releaseDate, rating, directorsFirstName, directorsLastName);
+        return Objects.hash(movieId, movieTitle, releaseDate, rating, directorsFirstName, directorsLastName);
     }
 
     @Override
     public String toString() {
         return "MovieDTO{" +
-                "movieID=" + movieID +
+                "movieId=" + movieId +
                 ", movieTitle='" + movieTitle + '\'' +
-                ", releaseDate=" + releaseDate +
+                ", releaseDate=" + FORMATTER.format(releaseDate) +
                 ", rating=" + rating +
                 ", directorsFirstName='" + directorsFirstName + '\'' +
                 ", directorsLastName='" + directorsLastName + '\'' +

@@ -7,7 +7,7 @@ import java.util.Objects;
  */
 public class DirectorDTO {
 
-    private Integer directorID;
+    private Integer directorId;
     private String firstName;
     private String lastName;
     private double avarageRating;
@@ -20,10 +20,10 @@ public class DirectorDTO {
         this.lastName = lastName;
     }
 
-    public DirectorDTO(int directorID, String firstName, String lastName, double avarageRating) {
+    public DirectorDTO(int directorId, String firstName, String lastName, double avarageRating) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.directorID = directorID;
+        this.directorId = directorId;
         this.avarageRating=avarageRating;
     }
 
@@ -43,12 +43,12 @@ public class DirectorDTO {
         this.lastName = lastName;
     }
 
-    public int getDirectorID() {
-        return directorID;
+    public int getDirectorId() {
+        return directorId;
     }
 
-    public void setDirectorID(int directorID) {
-        this.directorID = directorID;
+    public void setDirectorId(int directorId) {
+        this.directorId = directorId;
     }
 
     public double getAvarageRating() {
@@ -65,20 +65,20 @@ public class DirectorDTO {
         if (o == null || getClass() != o.getClass()) return false;
         DirectorDTO that = (DirectorDTO) o;
         return Double.compare(that.avarageRating, avarageRating) == 0 &&
-                Objects.equals(directorID, that.directorID) &&
+                Objects.equals(directorId, that.directorId) &&
                 Objects.equals(firstName, that.firstName) &&
                 Objects.equals(lastName, that.lastName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(directorID, firstName, lastName, avarageRating);
+        return Objects.hash(directorId, firstName, lastName, avarageRating);
     }
 
     @Override
     public String toString() {
         return "DirectorDTO{" +
-                "directorID=" + directorID +
+                "directorId=" + directorId +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", avarageRating=" + avarageRating +
