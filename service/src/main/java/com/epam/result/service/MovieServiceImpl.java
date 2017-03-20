@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.util.Assert;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -17,8 +18,9 @@ import java.util.List;
  */
 public class MovieServiceImpl implements MovieService{
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final Date MIN_DATE = new Date(1000-1900,01,01);
-    private static final Date MAX_DATE = new Date(9999-1900,12,31);
+    private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd");
+    private static final Date MIN_DATE = new Date(1000-1900,1,1);
+    private static final Date MAX_DATE = new Date(9999-1900,11,31);
 
 
     @Autowired
@@ -43,14 +45,16 @@ public class MovieServiceImpl implements MovieService{
 
     @Override
     public List<MovieDTO> getAllMoviesWithDirectorName() throws DataAccessException {
-        LOGGER.debug("getAllMoviesWithDirectorName()");
-        return movieDao.getAllMoviesWithDirectorName();
+        LOGGER.debug("getAllMovieDTO()");
+        return movieDao.getAllMovieDTO();
     }
 
     @Override
     public List<MovieDTO> getAllMoviesWithDateFilter(Date fromDate, Date toDate) throws DataAccessException {
-        LOGGER.debug("getAllMoviesWithDateFilter({})");
-        if(fromDate==null && toDate==null) return movieDao.getAllMoviesWithDirectorName();
+        LOGGER.debug("getAllMoviesWithDateFilter({})",
+                (fromDate==null?"null":FORMATTER.format(fromDate))+", "+
+                (toDate==null?"null":FORMATTER.format(toDate)));
+        if(fromDate==null && toDate==null) return movieDao.getAllMovieDTO();
         if(fromDate==null) fromDate = MIN_DATE;
         if(toDate==null) toDate = MAX_DATE;
         Assert.isTrue(toDate.compareTo(fromDate)>0, "The date in the beginning should be greater than at the end");
@@ -62,6 +66,13 @@ public class MovieServiceImpl implements MovieService{
         LOGGER.debug("getMovieById({})", movieId);
         Assert.notNull(movieId, "Movie ID should not be null.");
         return movieDao.getMovieById(movieId);
+    }
+
+    @Override
+    public MovieDTO getMovieByIdWithDirectorName(Integer movieId) throws DataAccessException{
+        LOGGER.debug("getMovieDTOById({})", movieId);
+        Assert.notNull(movieId, "Movie ID should not be null.");
+        return movieDao.getMovieDTOById(movieId);
     }
 
     @Override
@@ -79,7 +90,7 @@ public class MovieServiceImpl implements MovieService{
         try{
             if(movieDao.getMovieByTitleAndReleaseDate(movie.getMovieTitle(), movie.getReleaseDate())!=null){
                 throw new IllegalArgumentException(String.format(
-                        "The movie %s, release date - %s, already exists in the database",
+                        "The movie \"%s\", release date - \"%s\", already exists in the database",
                         movie.getMovieTitle(), movie.getReleaseDateAsString()));
             }
         } catch (DataAccessException e){  }
@@ -95,9 +106,11 @@ public class MovieServiceImpl implements MovieService{
         Assert.notNull(movie.getReleaseDate(), "Movie release date should not be null");
         Assert.notNull(movie.getMovieDirectorId(), "Movie director's ID should not be null");
         try{
-            if(movieDao.getMovieByTitleAndReleaseDate(movie.getMovieTitle(), movie.getReleaseDate())!=null){
+            Movie movieTemp;
+            movieTemp = movieDao.getMovieByTitleAndReleaseDate(movie.getMovieTitle(), movie.getReleaseDate());
+            if(movieTemp!=null && !movieTemp.getMovieId().equals(movie.getMovieId())){
                 throw new IllegalArgumentException(String.format(
-                        "The movie %s, release date - %s, already exists in the database",
+                        "The movie \"%s\", release date - \"%s\", already exists in the database",
                         movie.getMovieTitle(), movie.getReleaseDateAsString()));
             }
         } catch (DataAccessException e){  }

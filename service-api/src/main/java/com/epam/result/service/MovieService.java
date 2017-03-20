@@ -22,6 +22,8 @@ public interface MovieService {
 
     List<MovieDTO> getAllMoviesWithDateFilter(Date fromDate, Date toDate) throws DataAccessException;
 
+    MovieDTO getMovieByIdWithDirectorName(Integer movieId) throws DataAccessException;
+
     int addMovie(Movie movie) throws DataAccessException;
 
     void updateMovie(Movie movie) throws DataAccessException;

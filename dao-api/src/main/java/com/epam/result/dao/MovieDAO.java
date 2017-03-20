@@ -1,40 +1,86 @@
-/**
- * Created by sw0rd on 05.03.17.
- */
-
 package com.epam.result.dao;
-
-import org.springframework.dao.DataAccessException;
 
 import java.util.Date;
 import java.util.List;
 
 /**
- * DAO interface.
+ * The {@code DirectorDAO} - is an interface that provides access to a database.
+ * @author  Bogdan Viktor
  */
 public interface MovieDAO {
 
     /**
-     * Get all directors list.
-     *
-     * @return all directors list
+     * Get all movie list created by this director.
+     * @return all movie list created by this director.
+     
      */
-    List<Movie> getAllMoviesCreatedByDirector(Integer directorID) throws DataAccessException;
+    List<Movie> getAllMoviesCreatedByDirector(Integer directorID);
 
-    Movie getMovieByTitleAndReleaseDate(String movieTitle, Date date) throws DataAccessException;
+    /**
+     * Get movie by title and release date.
+     * @param movieTitle is movie title.
+     * @param releaseDate is movie release date.
+     * @return movie.
+     */
+    Movie getMovieByTitleAndReleaseDate(String movieTitle, Date releaseDate);
 
-    List<Movie> getAllMovies() throws DataAccessException;
+    /**
+     * Get movieDTO(movie with director's first and last name) by ID.
+     * @param movieId is movie ID.
+     * @return movieDTO.
+     */
+    MovieDTO getMovieDTOById(Integer movieId) ;
 
-    List<MovieDTO> getAllMoviesWithDirectorName() throws DataAccessException;
+    /**
+     * Get all movies list.
+     * @return all movies list
+     */
+    List<Movie> getAllMovies() ;
 
-    List<MovieDTO> getAllMoviesWithDateFilter(Date from, Date to) throws DataAccessException;
+    /**
+     * Get list of all movieDTO(movie with director's first and last name).
+     * @return list of movieDTO.
+     */
+    List<MovieDTO> getAllMovieDTO() ;
 
-    Movie getMovieById(Integer movieID) throws DataAccessException;
+    /**
+     * Get list of all movieDTO(movie with director's first and last name)
+     * with a date filter.
+     * @param fromDate start date.
+     * @param toDate finish date.
+     * @return list of movieDTO.
+     */
+    List<MovieDTO> getAllMoviesWithDateFilter(Date fromDate, Date toDate) ;
 
-    int addMovie(Movie movie) throws DataAccessException;
+    /**
+     * Get movie by ID.
+     * @param movieID is movie ID.
+     * @return movie.
+     */
+    Movie getMovieById(Integer movieID) ;
 
-    int updateMovie(Movie movie) throws DataAccessException;
+    /**
+     * Adds the movie to the database and returns
+     * the ID that the database assigned to it.
+     * @param movie movie.
+     * @return movie's ID.
+     */
+    int addMovie(Movie movie) ;
 
-    int deleteMovie(Integer movieID) throws DataAccessException;
+    /**
+     * Updates the movie in the database and returns
+     * the number of rows affected in data base.
+     * @param movie movie.
+     * @return the number of rows affected in data base.
+     */
+    int updateMovie(Movie movie) ;
+
+    /**
+     * Deletes the movie in the database and returns
+     * the number of rows affected in data base.
+     * @param movieID is movie ID.
+     * @return the number of rows affected in data base.
+     */
+    int deleteMovie(Integer movieID) ;
 
 }

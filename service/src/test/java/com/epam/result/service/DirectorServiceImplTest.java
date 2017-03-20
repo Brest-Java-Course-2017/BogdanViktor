@@ -38,7 +38,7 @@ public class DirectorServiceImplTest {
 
     @Test
     public void testGetAllDirectorsWithMovieRating() throws Exception {
-        LOGGER.debug("test: getAllDirectorsWithMovieRating()");
+        LOGGER.debug("test: getAllDirectorDTO()");
         List<DirectorDTO> list= directorService.getAllDirectorsWithMovieRating();
         assertEquals(4, list.size());
     }

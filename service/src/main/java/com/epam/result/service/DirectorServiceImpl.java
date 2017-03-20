@@ -36,8 +36,8 @@ public class DirectorServiceImpl implements DirectorService{
 
     @Override
     public List<DirectorDTO> getAllDirectorsWithMovieRating() throws DataAccessException {
-        LOGGER.debug("getAllDirectorsWithMovieRating()");
-        return directorDao.getAllDirectorsWithMovieRating();
+        LOGGER.debug("getAllDirectorDTO()");
+        return directorDao.getAllDirectorDTO();
     }
 
 

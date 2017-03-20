@@ -45,7 +45,7 @@ public class MovieServiceImplTest {
 
     @Test
     public void testGetAllMoviesWithDirectorName() throws Exception{
-        LOGGER.debug("test: getAllMoviesWithDirectorName()");
+        LOGGER.debug("test: getAllMovieDTO()");
         assertEquals(13, movieService.getAllMoviesWithDirectorName().size());
     }
 
@@ -76,7 +76,7 @@ public class MovieServiceImplTest {
 
     @Test
     public void testGetAllMoviesWithDateFilterWithToDateNull() throws Exception{
-        LOGGER.debug("test: getAllMoviesWithDateFilter(). Test with fromDate==null, toDate!=null");
+        LOGGER.debug("test: getAllMoviesWithDateFilter(). Test with fromDate!=null, toDate==null");
         Date fromDate = FORMATTER.parse("1994-10-14");
         List<MovieDTO> list = movieService.getAllMoviesWithDateFilter(fromDate, null);
         assertEquals(9, list.size());

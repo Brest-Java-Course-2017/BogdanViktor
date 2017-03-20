@@ -36,6 +36,7 @@ public class DirectorRestController {
 
     //curl -v localhost:8088/director/1
     @RequestMapping(value = "/director/{directorId}", method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.FOUND)
     public @ResponseBody Director getDirectorById(@PathVariable(value = "directorId") Integer directorId){
         LOGGER.debug("getDirectorById({})", directorId);
         return directorService.getDirectorById(directorId);
@@ -45,6 +46,7 @@ public class DirectorRestController {
     curl -H "Content-Type: application/json" -X POST -d '{"firstName":"xyz","re":"testName"}' -v localhost:8088/director
      */
     @RequestMapping(value = "/director", method = RequestMethod.POST)
+    @ResponseStatus(value = HttpStatus.CREATED)
     public @ResponseBody Integer addDirector(@RequestBody Director director){
         LOGGER.debug("addDirector({})", director.getFirstName()+" "+director.getLastName());
         return directorService.addDirector(director);
@@ -52,6 +54,7 @@ public class DirectorRestController {
 
     // curl -H "Content-Type: application/json" -X PUT -d '{"directorId":"2","firstName":"xyz","lastName":"testName"}' -v localhost:8088/director
     @RequestMapping(value = "/director", method = RequestMethod.PUT)
+    @ResponseStatus(value = HttpStatus.ACCEPTED)
     public void updateDirector(@RequestBody Director director){
         LOGGER.debug("updateDirector({})", director.getFirstName()+" "+director.getLastName());
         directorService.updateDirector(director);
@@ -59,6 +62,7 @@ public class DirectorRestController {
 
     //curl -X DELETE -v localhost:8088/director/5
     @RequestMapping(value = "/director/{directorId}", method = RequestMethod.DELETE)
+    @ResponseStatus(value = HttpStatus.OK)
     public void deleteDirectorById(@PathVariable(value = "directorId") Integer directorId){
         LOGGER.debug("deleteDirectorById({})", directorId);
         directorService.deleteDirector(directorId);

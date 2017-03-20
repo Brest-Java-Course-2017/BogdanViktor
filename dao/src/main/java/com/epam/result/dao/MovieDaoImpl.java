@@ -3,7 +3,6 @@ package com.epam.result.dao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -21,8 +20,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 /**
- * Created by sw0rd on 06.03.17.
+ * The {@code MovieDaoImpl} - is an implementation of interface "MovieDao"
+ * that provides access to a database.
+ * @author  Bogdan Viktor
  */
 public class MovieDaoImpl implements MovieDAO{
     private JdbcTemplate jdbcTemplate;
@@ -33,15 +35,15 @@ public class MovieDaoImpl implements MovieDAO{
 
 
 
-    static final String FIRST_NAME = "first_name";
-    static final String LAST_NAME = "last_name";
-    static final String MOVIE_ID = "movie_id";
-    static final String MOVIE_TITLE = "movie_title";
-    static final String RELEASE_DATE = "release_date";
-    static final String RATING = "rating";
-    static final String MOVIE_DIRECTOR_ID = "movie_director_id";
-    static final String FROM_DATE = "from_date";
-    static final String TO_DATE = "to_date";
+    private static final String FIRST_NAME = "first_name";
+    private static final String LAST_NAME = "last_name";
+    private static final String MOVIE_ID = "movie_id";
+    private static final String MOVIE_TITLE = "movie_title";
+    private static final String RELEASE_DATE = "release_date";
+    private static final String RATING = "rating";
+    private static final String MOVIE_DIRECTOR_ID = "movie_director_id";
+    private static final String FROM_DATE = "from_date";
+    private static final String TO_DATE = "to_date";
 
     @Value("${select_all_movies}")
     String selectAllMoviesSQL;
@@ -70,6 +72,9 @@ public class MovieDaoImpl implements MovieDAO{
     @Value("${select_movie_by_id}")
     String selectMovieByIdSQL;
 
+    @Value("${select_movie_by_id_with_director_name}")
+    String selectMovieByIdWithDirectorNameSQL;
+
 
 
     public MovieDaoImpl(DataSource dataSource) {
@@ -78,55 +83,52 @@ public class MovieDaoImpl implements MovieDAO{
     }
 
     @Override
-    public Movie getMovieByTitleAndReleaseDate(String movieTitle, Date date) throws DataAccessException{
+    public Movie getMovieByTitleAndReleaseDate(String movieTitle, Date date){
         LOGGER.debug("getMovieByTitleAndReleaseDate({})", movieTitle+","+FORMATTER.format(date));
         Map<String, Object> params = new HashMap<>();
         params.put(MOVIE_TITLE, movieTitle);
         params.put(RELEASE_DATE, FORMATTER.format(date));
-        Movie movie = namedParameterJdbcTemplate.queryForObject(selectMovieByTitleAndReleaseDateSQL,
+        return namedParameterJdbcTemplate.queryForObject(selectMovieByTitleAndReleaseDateSQL,
                 params, new MovieRowMapper());
-        return movie;
     }
 
     @Override
-    public List<Movie> getAllMovies() throws DataAccessException {
+    public List<Movie> getAllMovies() {
         LOGGER.debug("getAllMovies()");
 
-        List<Movie> list = jdbcTemplate.query(selectAllMoviesSQL, new MovieRowMapper());
-        return list;
+        return jdbcTemplate.query(selectAllMoviesSQL, new MovieRowMapper());
     }
 
     @Override
-    public List<Movie> getAllMoviesCreatedByDirector(Integer directorID) throws DataAccessException {
+    public List<Movie> getAllMoviesCreatedByDirector(Integer directorID) {
         LOGGER.debug("getAllMoviesCreatedByDirector({})", directorID);
         Map<String, Object> params = new HashMap<>();
         params.put( MOVIE_DIRECTOR_ID, directorID);
-        List<Movie> list = namedParameterJdbcTemplate.query(selectMoviesCreatedByDirectorSQL, params, new MovieRowMapper());
-        return list;
+        return namedParameterJdbcTemplate.query(selectMoviesCreatedByDirectorSQL,
+                params, new MovieRowMapper());
     }
 
     @Override
-    public List<MovieDTO> getAllMoviesWithDirectorName() throws DataAccessException {
-        LOGGER.debug("getAllMoviesWithDirectorName()");
+    public List<MovieDTO> getAllMovieDTO() {
+        LOGGER.debug("getAllMovieDTO()");
 
-        List<MovieDTO> list = jdbcTemplate.query(selectAllMoviesWithDirectorNameSQL, new MovieDTORowMapper());
-        return list;
+        return jdbcTemplate.query(selectAllMoviesWithDirectorNameSQL, new MovieDTORowMapper());
     }
 
     @Override
-    public List<MovieDTO> getAllMoviesWithDateFilter(Date fromDate, Date toDate) throws DataAccessException {
-        LOGGER.debug("getAllMoviesWithDateFilter({})", FORMATTER.format(fromDate), FORMATTER.format(toDate));
+    public List<MovieDTO> getAllMoviesWithDateFilter(Date fromDate, Date toDate) {
+        LOGGER.debug("getAllMoviesWithDateFilter({})", FORMATTER.format(fromDate)+", "+ FORMATTER.format(toDate));
 
         Map<String, Object> params = new HashMap<>();
         params.put(FROM_DATE, FORMATTER.format(fromDate));
         params.put(TO_DATE, FORMATTER.format(toDate));
-        List<MovieDTO> list = namedParameterJdbcTemplate.query(selectMoviesWithDateFilterSQL, params, new MovieDTORowMapper());
-        return list;
+        return namedParameterJdbcTemplate.query(selectMoviesWithDateFilterSQL,
+                params, new MovieDTORowMapper());
     }
 
     @Override
-    public int addMovie(Movie movie) throws DataAccessException {
-        LOGGER.debug("addMovie({})", movie.getMovieTitle());
+    public int addMovie(Movie movie) {
+        LOGGER.debug("addMovie({})", movie.getMovieTitle()+", "+movie.getReleaseDateAsString());
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
@@ -141,7 +143,7 @@ public class MovieDaoImpl implements MovieDAO{
     }
 
     @Override
-    public int updateMovie(Movie movie) throws DataAccessException {
+    public int updateMovie(Movie movie) {
         LOGGER.debug("updateMovie({})", movie.getMovieTitle()+" "+movie.getReleaseDateAsString());
         Map<String, Object> params = new HashMap<>();
         params.put(MOVIE_ID, movie.getMovieId());
@@ -153,7 +155,7 @@ public class MovieDaoImpl implements MovieDAO{
     }
 
     @Override
-    public int deleteMovie(Integer movieID) throws DataAccessException {
+    public int deleteMovie(Integer movieID) {
         LOGGER.debug("deleteMovie({})", movieID);
         Map<String, Object> params = new HashMap<>();
         params.put(MOVIE_ID, movieID);
@@ -161,26 +163,34 @@ public class MovieDaoImpl implements MovieDAO{
     }
 
     @Override
-    public Movie getMovieById(Integer movieID) throws DataAccessException {
+    public Movie getMovieById(Integer movieID) {
         LOGGER.debug("getMovieById({})", movieID);
         Map<String, Object> params = new HashMap<>();
         params.put(MOVIE_ID, movieID);
-        Movie movie = namedParameterJdbcTemplate.queryForObject(selectMovieByIdSQL, params, new MovieRowMapper());
-        return movie;
+        return namedParameterJdbcTemplate.queryForObject(selectMovieByIdSQL,
+                params, new MovieRowMapper());
+    }
+
+    @Override
+    public MovieDTO getMovieDTOById(Integer movieId) {
+        LOGGER.debug("getMovieDTOById({})", movieId);
+        Map<String, Object> params = new HashMap<>();
+        params.put(MOVIE_ID, movieId);
+        return namedParameterJdbcTemplate.queryForObject(selectMovieByIdWithDirectorNameSQL,
+                params, new MovieDTORowMapper());
     }
 
     private class MovieDTORowMapper implements RowMapper<MovieDTO>{
         @Override
         public MovieDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
             try {
-                MovieDTO movieDTO = new MovieDTO(
+                return new MovieDTO(
                         rs.getInt(MOVIE_ID),
                         rs.getString(MOVIE_TITLE),
                         FORMATTER.parse(rs.getString(RELEASE_DATE)),
                         rs.getDouble(RATING),
                         rs.getString(FIRST_NAME),
                         rs.getString(LAST_NAME));
-                return movieDTO;
             } catch (ParseException e) {
                 LOGGER.debug(e);
                 throw new SQLException(e);
@@ -192,13 +202,12 @@ public class MovieDaoImpl implements MovieDAO{
         @Override
         public Movie mapRow(ResultSet rs, int rowNum) throws SQLException {
             try {
-                Movie movie = new Movie(
+                return new Movie(
                         rs.getInt(MOVIE_ID),
                         rs.getString(MOVIE_TITLE),
                         FORMATTER.parse(rs.getString(RELEASE_DATE)),
                         rs.getDouble(RATING),
                         rs.getInt(MOVIE_DIRECTOR_ID));
-                return movie;
             } catch (ParseException e) {
                 LOGGER.debug(e);
                 throw new SQLException(e);

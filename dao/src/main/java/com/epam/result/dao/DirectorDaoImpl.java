@@ -3,7 +3,6 @@ package com.epam.result.dao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -19,7 +18,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by sw0rd on 06.03.17.
+ * The {@code DirectorDaoImpl} - is an implementation of interface "DirectorDao"
+ * that provides access to a database.
+ * @author  Bogdan Viktor
  */
 public class DirectorDaoImpl implements DirectorDAO {
     private JdbcTemplate jdbcTemplate;
@@ -27,10 +28,10 @@ public class DirectorDaoImpl implements DirectorDAO {
 
     private static final Logger LOGGER =LogManager.getLogger();
 
-    static final String DIRECTOR_ID = "director_id";
-    static final String FIRST_NAME = "first_name";
-    static final String LAST_NAME = "last_name";
-    static final String AVARAGE_RATING = "avarage";
+    private static final String DIRECTOR_ID = "director_id";
+    private static final String FIRST_NAME = "first_name";
+    private static final String LAST_NAME = "last_name";
+    private static final String AVERAGE_RATING = "average";
 
     @Value("${select_all_directors}")
     String selectAllDirectorsSQL;
@@ -62,38 +63,38 @@ public class DirectorDaoImpl implements DirectorDAO {
 
 
     @Override
-    public List<Director> getAllDirectors() throws DataAccessException {
+    public List<Director> getAllDirectors() {
         LOGGER.debug("getAllDirectors()");
         return jdbcTemplate.query(selectAllDirectorsSQL, new DirectorRowMapper());
     }
 
     @Override
-    public List<DirectorDTO> getAllDirectorsWithMovieRating() throws DataAccessException {
-        LOGGER.debug("getAllDirectorsWithMovieRating()");
+    public List<DirectorDTO> getAllDirectorDTO() {
+        LOGGER.debug("getAllDirectorDTO()");
         return jdbcTemplate.query(selectAllDirectorsWithMovieRatingSQL, new DirectorDTORowMapper());
     }
 
     @Override
-    public Director getDirectorById(Integer directorID) throws DataAccessException{
+    public Director getDirectorById(Integer directorID){
         LOGGER.debug("getDirectorById({})", directorID);
         Map<String, Object> params = new HashMap<>();
         params.put(DIRECTOR_ID, directorID);
-        Director director = namedParameterJdbcTemplate.queryForObject(selectDirectorByIdSQL, params, new DirectorRowMapper());
-        return director;
+        return namedParameterJdbcTemplate.queryForObject(selectDirectorByIdSQL,
+                params, new DirectorRowMapper());
     }
 
     @Override
-    public Director getDirectorByFirstAndLastName(String firstName, String lastName) throws DataAccessException{
-        LOGGER.debug("getDirectorByFirstNameAndLastName({})", firstName+","+lastName);
+    public Director getDirectorByFirstAndLastName(String firstName, String lastName){
+        LOGGER.debug("getDirectorByFirstNameAndLastName({})", firstName+", "+lastName);
         Map<String, Object> params = new HashMap<>();
         params.put(FIRST_NAME, firstName);
         params.put(LAST_NAME, lastName);
-        Director director = namedParameterJdbcTemplate.queryForObject(selectDirectorByFirstAndLastNameSQL, params, new DirectorRowMapper());
-        return director;
+        return namedParameterJdbcTemplate.queryForObject(selectDirectorByFirstAndLastNameSQL,
+                params, new DirectorRowMapper());
     }
 
     @Override
-    public int addDirector(Director director) throws DataAccessException {
+    public int addDirector(Director director) {
         LOGGER.debug("addDirector({})", director.getFirstName()+" "+director.getLastName());
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -106,7 +107,7 @@ public class DirectorDaoImpl implements DirectorDAO {
     }
 
     @Override
-    public int updateDirector(Director director) throws DataAccessException {
+    public int updateDirector(Director director) {
         LOGGER.debug("updateDirector({})", director.getFirstName()+" "+director.getLastName());
         Map<String, Object> params = new HashMap<>();
         params.put(DIRECTOR_ID, director.getDirectorId());
@@ -116,7 +117,7 @@ public class DirectorDaoImpl implements DirectorDAO {
     }
 
     @Override
-    public int deleteDirector(Integer directorID) throws DataAccessException {
+    public int deleteDirector(Integer directorID) {
         LOGGER.debug("deleteDirector({})", directorID);
         Map<String, Object> params = new HashMap<>();
         params.put(DIRECTOR_ID, directorID);
@@ -128,23 +129,21 @@ public class DirectorDaoImpl implements DirectorDAO {
     private class DirectorRowMapper implements RowMapper<Director>{
         @Override
         public Director mapRow(ResultSet rs, int rowNum) throws SQLException {
-            Director director = new Director(
+            return new Director(
                     rs.getInt(DIRECTOR_ID),
                     rs.getString(FIRST_NAME),
                     rs.getString(LAST_NAME));
-            return director;
         }
     }
 
     private class DirectorDTORowMapper implements RowMapper<DirectorDTO> {
         @Override
         public DirectorDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
-            DirectorDTO directorDTO = new DirectorDTO(
+            return new DirectorDTO(
                     rs.getInt(DIRECTOR_ID),
                     rs.getString(FIRST_NAME),
                     rs.getString(LAST_NAME),
-                    rs.getDouble(AVARAGE_RATING));
-            return directorDTO;
+                    rs.getDouble(AVERAGE_RATING));
         }
     }
 }
