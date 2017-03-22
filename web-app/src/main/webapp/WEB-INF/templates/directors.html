@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <title>Directors</title>
+
+    <link rel="stylesheet" href="../../resources/static/assets/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../../resources/static/assets/bootstrap/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../../resources/static/assets/pages/css/custom.css">
+    <script src="../../resources/static/assets/bootstrap/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+
+<div class="container-fluid">
+
+    <nav class="navbar navbar-toggleable-sm navbar-inverse fixed-top bg-inverse">
+
+        <a class="navbar-brand" href="#" th:href="@{/movies}">
+            <span class="hidden-folded inline">Movies</span>
+        </a>
+        <a class="navbar-brand" href="#" th:href="@{/directors}">
+            <span class="hidden-folded inline">Directors</span>
+        </a>
+
+
+    </nav>
+
+
+
+    <h2>Directors</h2>
+
+    <p>
+        <a href="#" th:href="@{/director/add}">Add New</a>
+    </p>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>First name</th>
+            <th>First name</th>
+            <th>Average rating of movies</th>
+        </tr>
+        </thead>
+        <tbody th:remove="all-but-first">
+        <tr th:each="director : ${directorList}">
+            <td th:text="${director.firstName}">First name</td>
+            <td th:text="${director.lastName}">Last name</td>
+            <td th:text="${director.averageRating}">7.6</td>
+            <td>
+
+                <a href="#" th:href="@{/director/edit(directorId=${director.directorId})}">Edit</a>
+                &nbsp;&nbsp;|&nbsp;&nbsp;
+                <a href="#" th:href="@{/director/details(directorId=${director.directorId})}">Details</a>
+                &nbsp;&nbsp;|&nbsp;&nbsp;
+                <a href="#" th:href="@{/director/delete(directorId=${director.directorId})}">Delete</a>
+
+            </td>
+        </tr>
+
+
+        </tbody>
+    </table>
+
+
+
+</div>
+
+<!--<script src="../../resources/static/assets/js/jquery/jquery-3.1.1.min.js"></script>-->
+<!--<script src="../../resources/static/assets/js/tether.min.js"></script>-->
+<!--<script src="../../resources/static/assets/bootstrap/dist/js/bootstrap.min.js"></script>-->
+<!--&lt;!&ndash; IE10 viewport hack for Surface/desktop Windows 8 bug &ndash;&gt;-->
+<!--<script src="../../resources/static/assets/js/ie10-viewport-bug-workaround.js"></script>-->
+
+<!--<script src="../../resources/static/assets/pages/js/users.js"></script>-->
+
+</body>
+</html>

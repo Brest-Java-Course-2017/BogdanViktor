@@ -37,7 +37,7 @@ public class MovieRestController {
     public @ResponseBody
     List<MovieDTO> getAllMoviesWithDirectorName(){
         LOGGER.debug("getAllDirectorsWithMoviesRating()");
-        return movieService.getAllMoviesWithDirectorName();
+        return movieService.getAllMovieDTO();
     }
 
     //curl -v localhost:8088/movies/DateFilter
@@ -49,10 +49,10 @@ public class MovieRestController {
     List<MovieDTO> getAllMoviesWithDateFilter(
             @PathVariable(value = "fromDate",required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date fromDate,
             @PathVariable(value = "toDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date toDate){
-        LOGGER.debug("getAllMoviesWithDateFilter({})",
+        LOGGER.debug("getAllMovieDTOWithDateFilter({})",
                 (fromDate==null?"null":FORMATTER.format(fromDate))+", "+
                 (toDate==null?"null":FORMATTER.format(toDate)));
-        return movieService.getAllMoviesWithDateFilter(fromDate, toDate);
+        return movieService.getAllMovieDTOWithDateFilter(fromDate, toDate);
     }
 
     //curl -v localhost:8088/movie/1

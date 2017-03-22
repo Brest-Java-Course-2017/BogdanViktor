@@ -31,7 +31,7 @@ public class DirectorRestController {
     @RequestMapping(value = "/directors", method = RequestMethod.GET)
     public @ResponseBody List<DirectorDTO> getAllDirectorsWithMoviesRating(){
         LOGGER.debug("getAllDirectorsWithMoviesRating()");
-        return directorService.getAllDirectorsWithMovieRating();
+        return directorService.getAllDirectorDTO();
     }
 
     //curl -v localhost:8088/director/1

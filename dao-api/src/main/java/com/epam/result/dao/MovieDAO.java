@@ -50,7 +50,7 @@ public interface MovieDAO {
      * @param toDate finish date.
      * @return list of movieDTO.
      */
-    List<MovieDTO> getAllMoviesWithDateFilter(Date fromDate, Date toDate) ;
+    List<MovieDTO> getAllMovieDTOWithDateFilter(Date fromDate, Date toDate) ;
 
     /**
      * Get movie by ID.

@@ -8,25 +8,71 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by sw0rd on 12.03.17.
+ * The {@code MovieService} - is a service layer of application.
+ * @author  Bogdan Viktor
  */
 public interface MovieService {
 
-    List<Movie> getAllMoviesCreatedByDirector(Integer directorID) throws DataAccessException;
+    /**
+     * Get all movie list created by this director.
+     * @return all movie list created by this director.
+     */
+    List<Movie> getAllMoviesCreatedByDirector(Integer directorID);
 
-    List<Movie> getAllMovies() throws DataAccessException;
+    /**
+     * Get all movies list.
+     * @return all movies list
+     */
+    List<Movie> getAllMovies();
 
-    Movie getMovieById(Integer movieId) throws DataAccessException;
+    /**
+     * Get movie by ID.
+     * @param movieId is movie identifier.
+     * @return movie.
+     */
+    Movie getMovieById(Integer movieId);
+    
+    /**
+     * Get list of all movieDTO(movie with director's first and last name).
+     * @return list of movieDTO.
+     */
+    List<MovieDTO> getAllMovieDTO();
 
-    List<MovieDTO> getAllMoviesWithDirectorName() throws DataAccessException;
+    /**
+     * Get list of all movieDTO(movie with director's first and last name)
+     * with a date filter.
+     * @param fromDate start date.
+     * @param toDate finish date.
+     * @return list of movieDTO.
+     */
+    List<MovieDTO> getAllMovieDTOWithDateFilter(Date fromDate, Date toDate);
 
-    List<MovieDTO> getAllMoviesWithDateFilter(Date fromDate, Date toDate) throws DataAccessException;
+    /**
+     * Get movieDTO(movie with director's first and last name) by ID.
+     * @param movieId is movie ID.
+     * @return movieDTO.
+     */
+    MovieDTO getMovieDTOById(Integer movieId);
 
-    MovieDTO getMovieByIdWithDirectorName(Integer movieId) throws DataAccessException;
+    /**
+     * Adds the movie to the database and returns
+     * the ID that the database assigned to it.
+     * @param movie movie.
+     * @return movie's ID.
+     */
+    int addMovie(Movie movie);
 
-    int addMovie(Movie movie) throws DataAccessException;
+    /**
+     * Updates the movie in the database and returns
+     * the number of rows affected in data base.
+     * @param movie movie.
+     */
+    void updateMovie(Movie movie);
 
-    void updateMovie(Movie movie) throws DataAccessException;
-
-    void deleteMovie(Integer movieID) throws DataAccessException;
+    /**
+     * Deletes the movie in the database and returns
+     * the number of rows affected in data base.
+     * @param movieID is movie ID.
+     */
+    void deleteMovie(Integer movieID);
 }

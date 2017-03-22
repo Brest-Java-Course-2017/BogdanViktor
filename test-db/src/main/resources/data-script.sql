@@ -2,7 +2,7 @@ INSERT INTO director (first_name, last_name)
 VALUES
   ('Steven', 'Spielberg'),
   ('Quentin', 'Tarantino'),
-  ('Ridley', 'Scott'),
+  ('Scott', 'Ridley'),
   ('Peter', 'Jackson');
 
 

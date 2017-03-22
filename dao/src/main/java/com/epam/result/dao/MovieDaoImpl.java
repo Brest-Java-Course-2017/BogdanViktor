@@ -42,8 +42,8 @@ public class MovieDaoImpl implements MovieDAO{
     private static final String RELEASE_DATE = "release_date";
     private static final String RATING = "rating";
     private static final String MOVIE_DIRECTOR_ID = "movie_director_id";
-    private static final String FROM_DATE = "from_date";
-    private static final String TO_DATE = "to_date";
+    private static final String START_DATE = "start_date";
+    private static final String END_DATE = "end_date";
 
     @Value("${select_all_movies}")
     String selectAllMoviesSQL;
@@ -116,12 +116,12 @@ public class MovieDaoImpl implements MovieDAO{
     }
 
     @Override
-    public List<MovieDTO> getAllMoviesWithDateFilter(Date fromDate, Date toDate) {
-        LOGGER.debug("getAllMoviesWithDateFilter({})", FORMATTER.format(fromDate)+", "+ FORMATTER.format(toDate));
+    public List<MovieDTO> getAllMovieDTOWithDateFilter(Date startDate, Date endDate) {
+        LOGGER.debug("getAllMovieDTOWithDateFilter({})", FORMATTER.format(startDate)+", "+ FORMATTER.format(endDate));
 
         Map<String, Object> params = new HashMap<>();
-        params.put(FROM_DATE, FORMATTER.format(fromDate));
-        params.put(TO_DATE, FORMATTER.format(toDate));
+        params.put(START_DATE, FORMATTER.format(startDate));
+        params.put(END_DATE, FORMATTER.format(endDate));
         return namedParameterJdbcTemplate.query(selectMoviesWithDateFilterSQL,
                 params, new MovieDTORowMapper());
     }

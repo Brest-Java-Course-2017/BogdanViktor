@@ -5,7 +5,6 @@ import com.epam.result.dao.MovieDAO;
 import com.epam.result.dao.MovieDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.h2.jdbc.JdbcSQLException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -68,13 +67,6 @@ public class MovieDaoImplTest {
         assertEquals(initialSize+1, list.size());
     }
 
-    @Test(expected = JdbcSQLException.class)
-    public void test_add_movie_when_director_ID_does_not_exist_in_DB() throws Exception{
-        LOGGER.debug("test: AddMovie(), when director ID does not exist in DB");
-        Movie newMovie = new Movie(null, "title movie", new Date(), 7.0, 12);
-        movieDAO.addMovie(newMovie);
-    }
-
     @Test
     public void test_update_movie() throws Exception{
         LOGGER.debug("test: updateMovie()");
@@ -112,11 +104,11 @@ public class MovieDaoImplTest {
     }
 
     @Test
-    public void test_get_all_movies_with_date_filter() throws Exception{
-        LOGGER.debug("test: getAllMoviesWithDateFilter()");
+    public void test_get_all_movieDTO_with_date_filter() throws Exception{
+        LOGGER.debug("test: getAllMovieDTOWithDateFilter()");
         Date fromDate = FORMATTER.parse("2000-06-08");
         Date toDate = FORMATTER.parse("2016-06-08");
-        List<MovieDTO> list = movieDAO.getAllMoviesWithDateFilter(fromDate, toDate);
+        List<MovieDTO> list = movieDAO.getAllMovieDTOWithDateFilter(fromDate, toDate);
         assertEquals(7, list.size());
     }
 
@@ -135,5 +127,18 @@ public class MovieDaoImplTest {
         String movieTitle = "The Lord";
         Date date = FORMATTER.parse("2001-12-19");
         movieDAO.getMovieByTitleAndReleaseDate(movieTitle, date);
+    }
+
+    @Test
+    public void test_get_movieDTO_by_id() throws Exception{
+        LOGGER.debug("test: getMovieById()");
+        MovieDTO newMovieDTO = new MovieDTO(2, "Catch Me If You Can", FORMATTER.parse("2002-12-25"), 8.0, "Steven", "Spielberg");
+        assertEquals(newMovieDTO, movieDAO.getMovieDTOById(2));
+    }
+
+    @Test(expected = EmptyResultDataAccessException.class)
+    public void test_get_movieDTO_by_id_with_null() throws Exception{
+        LOGGER.debug("test: getMovieById() with null");
+        movieDAO.getMovieDTOById(null);
     }
 }

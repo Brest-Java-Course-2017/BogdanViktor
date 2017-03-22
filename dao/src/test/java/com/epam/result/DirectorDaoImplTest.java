@@ -102,13 +102,6 @@ public class DirectorDaoImplTest {
         assertEquals(size-1, directorDAO.getAllDirectors().size());
     }
 
-    @Test(expected = JdbcSQLException.class)
-    public void test_delete_director_when_he_related_with_movie_in_DB(){
-        LOGGER.debug("test: deleteDirector(), when he related with movie in DB");
-        directorDAO.deleteDirector(2);
-    }
-
-
     @Test
     public void test_get_director_by_first_and_last_name_positive(){
         LOGGER.debug("test: getDirectorByFirstAndLastName()");

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <title>Edit movie</title>
+
+    <link rel="stylesheet" href="../../resources/static/assets/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../../resources/static/assets/bootstrap/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../../resources/static/assets/pages/css/custom.css">
+    <script src="../../resources/static/assets/bootstrap/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+
+<div class="container-fluid">
+
+    <nav class="navbar navbar-toggleable-sm navbar-inverse fixed-top bg-inverse">
+        <a class="navbar-brand" href="#" th:href="@{/movies}">
+            <span class="hidden-folded inline">Movies</span>
+        </a>
+        <a class="navbar-brand" href="#" th:href="@{/directors}">
+            <span class="hidden-folded inline">Directors</span>
+        </a>
+    </nav>
+
+    <h2>Edit movie</h2>
+<hr/>
+
+     <form class="form-horizontal" id="movieForm" th:object="${movie}" action="#" th:action="@{/movie/edit}" method="post">
+         <input type="hidden" th:field="*{movieId}" />
+
+         <div class="form-group">
+            <label for="movieTitle" class="col-sm-2 control-label">Movie title:</label>
+            <div class="col-sm-10">
+                <input id="movieTitle" name="movieTitle" type="text" th:field="${movie.movieTitle}" style="width: 35%" value=""/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="releaseDate" class="col-sm-2 control-label">Release Date:</label>
+            <div class="col-sm-10">
+                <input id="releaseDate" name="releaseDate" type="text"
+                       th:value="${#dates.format(movie.releaseDate, 'yyyy-MM-dd')}" style="width: 35%" />
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="rating" class="col-sm-2 control-label">Rating:</label>
+            <div class="col-sm-10">
+                <input id="rating" name="rating" type="text" placeholder="0.0" th:field="${movie.rating}"
+                       style="width: 35%" value=""/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="movieDirectorId" class="col-sm-2 control-label">Director:</label>
+            <div class="col-sm-10">
+
+                <select name="movieDirectorId" id="movieDirectorId" style="width: 35%">
+                    <div th:each="director : ${directorList}" th:remove="tag">
+                        <option th:if="${director.directorId != movie.movieDirectorId}"
+                                th:value="${director.directorId}"
+                                th:text="${director.firstName}+' '+${director.lastName}">Movie director</option>
+
+                        <option th:if="${director.directorId == movie.movieDirectorId}"
+                                th:value="${director.directorId}"
+                                th:text="${director.firstName}+' '+${director.lastName}"
+                                selected="selected">
+                            Movie director
+                        </option>
+                    </div>
+
+                </select>
+
+            </div>
+        </div>
+
+        <hr/>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">
+                <a href="#" th:href="@{/movies}">Back to List</a>
+            </label>
+            <div class="col-sm-10">
+                <input type="submit" value="Save"/>
+
+            </div>
+        </div>
+    </form>
+
+
+
+</div>
+
+<script src="../../resources/static/assets/jquery/jquery-3.1.1.min.js"></script>
+<script src="../../resources/static/assets/jquery/jquery.validate.js"></script>
+<script src="../../resources/static/assets/pages/js/validate.js"></script>
+
+</body>
+</html>
