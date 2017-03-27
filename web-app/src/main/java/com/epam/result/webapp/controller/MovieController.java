@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by sw0rd on 15.03.17.
+ * @author  Bogdan Viktor
  */
 @Controller
 public class MovieController {
@@ -39,7 +40,7 @@ public class MovieController {
         LOGGER.debug(" /movies page.");
         List moviesList = movieService.getAllMovieDTO();
         model.addAttribute("moviesList", moviesList);
-        return "movies";
+        return "moviesPage";
     }
 
     @RequestMapping(value = "/movie/add", method = RequestMethod.GET)
@@ -51,6 +52,7 @@ public class MovieController {
     }
 
     @RequestMapping(value = "/movie/add", method = RequestMethod.POST)
+    @ResponseStatus(value = HttpStatus.CREATED)
     public String addMovie( @RequestParam(value="movieTitle") String movieTitle,
                             @RequestParam(value = "releaseDate") @DateTimeFormat(pattern="yyyy-MM-dd") Date releaseDate,
                             @RequestParam(value="rating") Double rating,
@@ -61,29 +63,29 @@ public class MovieController {
         movieService.addMovie(movie);
         List moviesList = movieService.getAllMovieDTO();
         model.addAttribute("moviesList", moviesList);
-        return "movies";
+        return "moviesPage";
     }
 
     @RequestMapping(value = "/movie/datefilter", method = RequestMethod.POST)
     public String getMoviesWithDateFilter(
-                            @RequestParam(value = "fromDate", required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date fromDate,
-                            @RequestParam(value = "toDate", required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date toDate,
+                            @RequestParam(value = "startDate", required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate,
+                            @RequestParam(value = "endDate", required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate,
                             Model model) {
-        LOGGER.debug("addMovie({})");
-        List moviesList = movieService.getAllMovieDTOWithDateFilter(fromDate, toDate);
+        LOGGER.debug("get movies with date filter");
+        List moviesList = movieService.getAllMovieDTOWithDateFilter(startDate, endDate);
         SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd");
-        String fromDateMessage = (fromDate==null?"":" from "+FORMATTER.format(fromDate));
-        String toDateMessage = (toDate==null?"":" to "+FORMATTER.format(toDate));
+        String startDateMessage = (startDate==null?"":" from "+FORMATTER.format(startDate));
+        String endDateMessage = (endDate==null?"":" to "+FORMATTER.format(endDate));
         model.addAttribute("moviesList", moviesList);
-        model.addAttribute("fromDate", fromDateMessage);
-        model.addAttribute("toDate", toDateMessage);
-        return "movies";
+        model.addAttribute("startDate", startDateMessage);
+        model.addAttribute("endDate", endDateMessage);
+        return "moviesPage";
     }
 
 
     @RequestMapping(value = "/movie/edit", method = RequestMethod.GET)
     public String editMoviePage(@RequestParam("movieId") Integer movieId, Model model) {
-        LOGGER.debug(" editMoviePage()");
+        LOGGER.debug(" movieEdit page()");
         Movie movie = movieService.getMovieById(movieId);
         List directorList = directorService.getAllDirectorDTO();
         model.addAttribute("directorList", directorList);
@@ -98,17 +100,17 @@ public class MovieController {
                             @RequestParam(value="rating") Double rating,
                             @RequestParam(value = "movieDirectorId") Integer movieDirectorId,
                             Model model) {
-        LOGGER.debug(" editMovie()");
+        LOGGER.debug(" edit movie()");
         Movie movie = new Movie(movieId, movieTitle, releaseDate, rating, movieDirectorId);
         movieService.updateMovie(movie);
         List moviesList = movieService.getAllMovieDTO();
         model.addAttribute("moviesList", moviesList);
-        return "movies";
+        return "moviesPage";
     }
 
     @RequestMapping(value = "/movie/delete", method = RequestMethod.GET)
     public String deleteMoviePage(@RequestParam("movieId") Integer movieId, Model model) {
-        LOGGER.debug(" deleteMoviePage()");
+        LOGGER.debug(" movieDelete page()");
         MovieDTO movie = movieService.getMovieDTOById(movieId);
         model.addAttribute("movie", movie);
         return "movieDelete";
@@ -116,45 +118,11 @@ public class MovieController {
 
     @RequestMapping(value = "/movie/delete", method = RequestMethod.POST)
     public String deleteMovie(@RequestParam("movieId") Integer movieId, Model model) {
-        LOGGER.debug(" deleteMovie()");
+        LOGGER.debug(" delete movie()");
         movieService.deleteMovie(movieId);
         List moviesList = movieService.getAllMovieDTO();
         model.addAttribute("moviesList", moviesList);
-        return "movies";
+        return "moviesPage";
     }
-    /*
-
-
-    @RequestMapping(value = "/director", method = RequestMethod.POST)
-    public String saveDirector(@ModelAttribute Director director, Model model) {
-        LOGGER.debug("saveDirector({})");
-            directorService.updateDirector(director);
-            List directorList = directorService.getAllDirectorDTO();
-            model.addAttribute("directorList", directorList);
-            return "directors";
-    }
-     */
-
-////    @ExceptionHandler(IllegalArgumentException.class)
-//    @RequestMapping("error")
-////    @ExceptionHandler(DataAccessException.class, IllegalArgumentException.class)
-//    @ResponseStatus(HttpStatus.NOT_FOUND)
-//    public String handleDataAccessException(HttpServletRequest req, DataAccessException ex, Model model) {
-//        LOGGER.debug("Handling DataAccessException: " + ex);
-//        model.addAttribute("exception", ex);
-//        model.addAttribute("url", req.getRequestURL());
-//        return "errorPage";
-//    }
-
-//    @ExceptionHandler(Exception.class)
-//    public ModelAndView handleError(HttpServletRequest req, Exception ex) {
-////        logger.error("Request: " + req.getRequestURL() + " raised " + ex);
-//
-//        ModelAndView mav = new ModelAndView();
-//        mav.addObject("exception", ex);
-//        mav.addObject("url", req.getRequestURL());
-//        mav.setViewName("errorPage");
-//        return mav;
-//    }
 
 }

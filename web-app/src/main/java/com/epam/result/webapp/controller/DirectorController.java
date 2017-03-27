@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * Created by sw0rd on 15.03.17.
+ * @author  Bogdan Viktor
  */
 @Controller
 public class DirectorController {
@@ -28,12 +28,12 @@ public class DirectorController {
 
 
 
-    @GetMapping(value = "/directors")
+    @RequestMapping(value = "/directors")
     public String directors(Model model) {
-        LOGGER.debug(" /movies page.");
+        LOGGER.debug(" /directors page.");
         List directorList = directorService.getAllDirectorDTO();
         model.addAttribute("directorList", directorList);
-        return "directors";
+        return "directorsPage";
     }
 
     @RequestMapping(value = "/director/edit", method = RequestMethod.GET)
@@ -41,7 +41,7 @@ public class DirectorController {
     public String directorEdit(
             @RequestParam("directorId") Integer directorId,
             Model model) {
-        LOGGER.debug("getDirectorById({})", directorId);
+        LOGGER.debug("director edit page, directorID={}", directorId);
         Director director = directorService.getDirectorById(directorId);
         model.addAttribute("director", director);
         return "directorEdit";
@@ -52,27 +52,28 @@ public class DirectorController {
     public String saveDirector(
             @ModelAttribute Director director,
             Model model) {
-        LOGGER.debug("saveDirector({})");
+        LOGGER.debug("update director");
             directorService.updateDirector(director);
             List directorList = directorService.getAllDirectorDTO();
             model.addAttribute("directorList", directorList);
-            return "directors";
+            return "directorsPage";
     }
 
 
     @RequestMapping(value = "/director/add", method = RequestMethod.GET)
     public String directorAdd(){
-        LOGGER.debug("getDirectorById({})");
+        LOGGER.debug("add new director page");
         return "directorAdd";
     }
 
     @RequestMapping(value = "/director/add", method = RequestMethod.POST)
+    @ResponseStatus(value = HttpStatus.CREATED)
     public String addDirector(@ModelAttribute Director director, Model model) {
-        LOGGER.debug("addDirector({})");
+        LOGGER.debug("add director");
             directorService.addDirector(director);
             List directorList = directorService.getAllDirectorDTO();
             model.addAttribute("directorList", directorList);
-            return "directors";
+            return "directorsPage";
     }
 
 
@@ -80,7 +81,7 @@ public class DirectorController {
     public String directorDetails(
             @RequestParam("directorId") Integer directorId,
             Model model) {
-        LOGGER.debug("directorDetails({})", directorId);
+        LOGGER.debug("director details page, directorId={}", directorId);
         Director director = directorService.getDirectorById(directorId);
         List moviesList = movieService.getAllMoviesCreatedByDirector(directorId);
         model.addAttribute("director", director);
@@ -92,7 +93,7 @@ public class DirectorController {
     public String directorDeletePage(
             @RequestParam("directorId") Integer directorId,
             Model model) {
-        LOGGER.debug("directorDeletePage({})", directorId);
+        LOGGER.debug("director delete page, directorID={}", directorId);
         Director director = directorService.getDirectorById(directorId);
         model.addAttribute("director", director);
         List moviesList = movieService.getAllMoviesCreatedByDirector(directorId);
@@ -107,11 +108,11 @@ public class DirectorController {
     public String directorDelete(
             @RequestParam("directorId") Integer directorId,
             Model model) {
-        LOGGER.debug("directorDelete({})");
+        LOGGER.debug("director delete");
         directorService.deleteDirector(directorId);
         List directorList = directorService.getAllDirectorDTO();
         model.addAttribute("directorList", directorList);
-        return "directors";
+        return "directorsPage";
     }
 
 

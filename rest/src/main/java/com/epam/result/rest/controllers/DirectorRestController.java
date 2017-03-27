@@ -1,4 +1,4 @@
-package com.epam.result.rest;
+package com.epam.result.rest.controllers;
 
 import com.epam.result.dao.Director;
 import com.epam.result.dao.DirectorDTO;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * Created by sw0rd on 12.03.17.
+ * @author  Bogdan Viktor
  */
 @RestController
 public class DirectorRestController {
@@ -29,8 +29,8 @@ public class DirectorRestController {
 
     //curl -v localhost:8088/directors
     @RequestMapping(value = "/directors", method = RequestMethod.GET)
-    public @ResponseBody List<DirectorDTO> getAllDirectorsWithMoviesRating(){
-        LOGGER.debug("getAllDirectorsWithMoviesRating()");
+    public @ResponseBody List<DirectorDTO> getAllDirectorsDTO(){
+        LOGGER.debug("getAllDirectorsDTO()");
         return directorService.getAllDirectorDTO();
     }
 

@@ -1,4 +1,4 @@
-package com.epam.result.rest;
+package com.epam.result.rest.controllers;
 
 import com.epam.result.dao.Movie;
 import com.epam.result.dao.MovieDTO;
@@ -15,7 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by sw0rd on 13.03.17.
+ * @author  Bogdan Viktor
  */
 @CrossOrigin
 @RestController
@@ -35,24 +35,22 @@ public class MovieRestController {
     //curl -v localhost:8088/movies
     @RequestMapping(value = "/movies", method = RequestMethod.GET)
     public @ResponseBody
-    List<MovieDTO> getAllMoviesWithDirectorName(){
+    List<MovieDTO> getAllMoviesDTO(){
         LOGGER.debug("getAllDirectorsWithMoviesRating()");
         return movieService.getAllMovieDTO();
     }
 
-    //curl -v localhost:8088/movies/DateFilter
-    @RequestMapping(value = {"/movies/DateFilter",
-                        "/movies/DateFilter/{fromDate}/null",
-                        "/movies/DateFilter/null/{toDate}",
-                        "/movies/DateFilter/{fromDate}/{toDate}"}, method = RequestMethod.GET)
+
+//    curl -v "localhost:8088/movies/DateFilter?startDate=2016-01-01&endDate=2017-12-31"
+    @RequestMapping(value = "/movies/DateFilter", method = RequestMethod.GET)
     public @ResponseBody
-    List<MovieDTO> getAllMoviesWithDateFilter(
-            @PathVariable(value = "fromDate",required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date fromDate,
-            @PathVariable(value = "toDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date toDate){
+    List<MovieDTO> getAllMoviesDTOWithDateFilter(
+            @RequestParam(value = "startDate",required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+            @RequestParam(value = "endDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate){
         LOGGER.debug("getAllMovieDTOWithDateFilter({})",
-                (fromDate==null?"null":FORMATTER.format(fromDate))+", "+
-                (toDate==null?"null":FORMATTER.format(toDate)));
-        return movieService.getAllMovieDTOWithDateFilter(fromDate, toDate);
+                (startDate==null?"null":FORMATTER.format(startDate))+", "+
+                        (endDate==null?"null":FORMATTER.format(endDate)));
+        return movieService.getAllMovieDTOWithDateFilter(startDate, endDate);
     }
 
     //curl -v localhost:8088/movie/1
@@ -63,7 +61,7 @@ public class MovieRestController {
         return movieService.getMovieById(movieId);
     }
 
-//    curl -H "Content-Type: application/json" -X POST -d '{"movieTitle":"xyz","releaseDate":"2015-12-09","rating":"6.5","movieDirectorId":"2"}' -v localhost:8088/movie
+//    curl -H "Content-Type: application/json" -X POST -d '{"movieTitle":"test","releaseDate":"2015-12-09","rating":"6.5","movieDirectorId":"2"}' -v localhost:8088/movie
     @RequestMapping(value = "/movie", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.CREATED)
     public @ResponseBody Integer addMovie(@RequestBody Movie movie){
@@ -71,7 +69,7 @@ public class MovieRestController {
         return movieService.addMovie(movie);
     }
 
-//    curl -H "Content-Type: application/json" -X PUT -d '{"movieId":"2","movieTitle":"xyz","releaseDate":"2015-12-09","rating":"6.5","movieDirectorId":"2"}' -v localhost:8088/movie
+//    curl -H "Content-Type: application/json" -X PUT -d '{"movieId":"2","movieTitle":"test","releaseDate":"2015-12-09","rating":"6.5","movieDirectorId":"2"}' -v localhost:8088/movie
     @RequestMapping(value = "/movie", method = RequestMethod.PUT)
     @ResponseStatus(value = HttpStatus.ACCEPTED)
     public void updateMovie(@RequestBody Movie movie){

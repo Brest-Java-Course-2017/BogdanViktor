@@ -7,7 +7,7 @@ import java.util.Objects;
 
 
 /**
- * The {@code Movie} - this is one of the essences in project.
+ * The {@code Movie} - this is one of the entities in project.
  * Have some simple methods.
  * @author  Bogdan Viktor
  */

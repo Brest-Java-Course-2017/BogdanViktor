@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 /**
- * Created by sw0rd on 19.03.17.
+ * @author  Bogdan Viktor
  */
 
 @ControllerAdvice

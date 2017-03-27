@@ -39,15 +39,15 @@
 
             <form class="form-horizontal" id="filter-form" action="#" th:action="@{/movie/datefilter}" method="post">
                 <div class="form-group">
-                    <label for="fromDate" class="col-sm-2 control-label">From date:</label>
+                    <label for="startDate" class="col-sm-2 control-label">From date:</label>
                     <div class="col-sm-10">
-                        <input id="fromDate" name="fromDate" type="text" placeholder="yyyy-MM-dd" value=""/>
+                        <input id="startDate" name="startDate" type="text" placeholder="yyyy-MM-dd" value=""/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="toDate" class="col-sm-2 control-label">to date:</label>
+                    <label for="endDate" class="col-sm-2 control-label">to date:</label>
                     <div class="col-sm-10">
-                        <input id="toDate" name="toDate" type="text" placeholder="yyyy-MM-dd" value=""/>
+                        <input id="endDate" name="endDate" type="text" placeholder="yyyy-MM-dd" value=""/>
                     </div>
                 </div>
 
@@ -58,9 +58,9 @@
         </div>
     </div>
 
-    <h4 th:text="((${fromDate}==null or ${fromDate}=='') and
-    (${toDate}==null or ${toDate}=='')) ?'':
-    ('Movies created'+${fromDate}+${toDate})">Date filter</h4>
+    <h4 th:text="((${startDate}==null or ${startDate}=='') and
+    (${endDate}==null or ${endDate}=='')) ?'':
+    ('Movies created'+${startDate}+${endDate})">Date filter</h4>
     <hr/>
     <table class="table table-striped">
         <thead>

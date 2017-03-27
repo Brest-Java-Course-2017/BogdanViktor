@@ -1,4 +1,4 @@
-package com.epam.result.rest;
+package com.epam.result.rest.controllers;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+/**
+ * @author  Bogdan Viktor
+ */
 @ControllerAdvice
 public class RestErrorHandler {
 
