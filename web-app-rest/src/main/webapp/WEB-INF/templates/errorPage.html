@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <title>Movies</title>
+
+    <link rel="stylesheet" href="../../resources/static/assets/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../../resources/static/assets/bootstrap/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../../resources/static/assets/pages/css/custom.css">
+    <script src="../../resources/static/assets/bootstrap/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+
+<div class="container-fluid">
+
+    <nav class="navbar navbar-toggleable-sm navbar-inverse fixed-top bg-inverse">
+        <a class="navbar-brand" href="#" th:href="@{/movies}">
+            <span class="hidden-folded inline">Movies</span>
+        </a>
+        <a class="navbar-brand" href="#" th:href="@{/directors}">
+            <span class="hidden-folded inline">Directors</span>
+        </a>
+    </nav>
+
+    <h2>Something went wrong!</h2>
+
+<hr/>
+    <h3>Error description:</h3>
+    <h4 th:text="${exception.message}">Bruce</h4>
+
+<hr/>
+
+    </div>
+
+<script src="../../resources/static/assets/jquery/jquery-3.1.1.min.js"></script>
+<script src="../../resources/static/assets/jquery/jquery.validate.js"></script>
+<script src="../../resources/static/assets/pages/js/validate.js"></script>
+
+</body>
+</html>

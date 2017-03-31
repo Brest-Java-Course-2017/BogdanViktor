@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <title>Delete director</title>
+
+    <link rel="stylesheet" href="../../resources/static/assets/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../../resources/static/assets/bootstrap/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../../resources/static/assets/pages/css/custom.css">
+    <script src="../../resources/static/assets/bootstrap/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+
+<div class="container-fluid">
+
+    <nav class="navbar navbar-toggleable-sm navbar-inverse fixed-top bg-inverse">
+
+        <a class="navbar-brand" href="#" th:href="@{/movies}">
+            <span class="hidden-folded inline">Movies</span>
+        </a>
+        <a class="navbar-brand" href="#" th:href="@{/directors}">
+            <span class="hidden-folded inline">Directors</span>
+        </a>
+
+
+    </nav>
+
+    <h2>Delete</h2>
+
+    <h4>&nbsp;&nbsp;If you really want to remove this director, you must first delete all the movies associated with him</h4>
+    <hr />
+
+        <dl class="dl-horizontal">
+                    <dt>
+                        First Name:
+                    </dt>
+                    <dd th:text="${director.firstName}">
+                        Bruce
+                    </dd>
+
+                    <dt>
+                        Last Name:
+                    </dt>
+                    <dd th:text="${director.lastName}">
+                        Wein
+                    </dd>
+
+            <dd>
+                <hr/>
+                        <h4>List of movies created by:</h4>
+
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Movie title</th>
+                                <th>Release Date</th>
+                                <th>Rating</th>
+                            </tr>
+                            </thead>
+                            <tbody th:remove="all-but-first">
+                            <tr th:each="movie : ${moviesList}">
+                                <td th:text="${movie.movieTitle}">Movie title</td>
+                                <td th:text="${#dates.format(movie.releaseDate, 'yyyy-MM-dd')}">2013-08-07</td>
+                                <td th:text="${movie.rating}">7.6</td>
+                                <td>
+                                    <a href="#" th:href="@{/movie/delete(movieId=${movie.movieId})}">Delete</a>
+                                </td>
+                            </tr>
+
+
+                            </tbody>
+                        </table>
+            </dd>
+        </dl>
+
+
+
+
+    <p>
+        <strong>
+            <a href="/directors">Back to List</a>
+        </strong>
+    </p>
+
+
+
+</div>
+
+<script src="../../resources/static/assets/jquery/jquery-3.1.1.min.js"></script>
+<script src="../../resources/static/assets/jquery/jquery.validate.js"></script>
+<script src="../../resources/static/assets/pages/js/validate.js"></script>
+
+</body>
+</html>
