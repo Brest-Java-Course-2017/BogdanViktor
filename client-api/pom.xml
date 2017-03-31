@@ -10,6 +10,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>client-api</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>com.epam.result</groupId>
+            <artifactId>model</artifactId>
+        </dependency>
+    </dependencies>
 
 
 </project>

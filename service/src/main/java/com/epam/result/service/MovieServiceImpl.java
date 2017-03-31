@@ -54,8 +54,8 @@ public class MovieServiceImpl implements MovieService{
     public List<MovieDTO> getAllMovieDTOWithDateFilter(Date startDate, Date endDate) {
         LOGGER.debug("getAllMovieDTOWithDateFilter({})",
                 (startDate==null?"null":FORMATTER.format(startDate))+", "+
-                (endDate==null?"null":FORMATTER.format(endDate)));
-        
+                        (endDate==null?"null":FORMATTER.format(endDate)));
+
         if(startDate==null && endDate==null) return movieDao.getAllMovieDTO();
         if(startDate==null) startDate = MIN_DATE;
         if(endDate==null) endDate = MAX_DATE;

@@ -19,6 +19,9 @@
         <module>service-api</module>
         <module>rest</module>
         <module>web-app</module>
+        <module>client-api</module>
+        <module>client-rest</module>
+        <module>web-app-rest</module>
     </modules>
 
     <name>Aggregator for movies-management</name>
@@ -79,6 +82,21 @@
             <dependency>
                 <groupId>com.epam.result</groupId>
                 <artifactId>web-app</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.epam.result</groupId>
+                <artifactId>web-app-rest</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.epam.result</groupId>
+                <artifactId>client-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.epam.result</groupId>
+                <artifactId>client-rest</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

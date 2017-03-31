@@ -28,6 +28,7 @@ public class DirectorRestController {
     private DirectorService directorService;
 
     //curl -v localhost:8088/directors
+    //curl -v localhost:8080/rest-1.0-SNAPSHOT/directors
     @RequestMapping(value = "/directors", method = RequestMethod.GET)
     public @ResponseBody List<DirectorDTO> getAllDirectorsDTO(){
         LOGGER.debug("getAllDirectorsDTO()");

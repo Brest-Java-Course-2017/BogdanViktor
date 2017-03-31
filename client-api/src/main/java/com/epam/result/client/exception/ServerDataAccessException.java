@@ -1,7 +1,14 @@
 package com.epam.result.client.exception;
 
 /**
- * Created by sw0rd on 31.03.17.
+ * @author  Bogdan Viktor
  */
-public class ServerDataAccessException {
+public class ServerDataAccessException extends RuntimeException{
+    public ServerDataAccessException(String message) {
+        super(message);
+    }
+
+    public ServerDataAccessException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }
