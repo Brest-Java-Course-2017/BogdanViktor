@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class DirectorConsumerImpl implements DirectorConsumer {
 
-    @Value("${protocol}://${host}:${port}/${prefix}")
+    @Value("${protocol}://${host}:${port}${prefix}")
     private String url;
 
     @Value("${point.director}")
@@ -27,24 +27,14 @@ public class DirectorConsumerImpl implements DirectorConsumer {
 
     ClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
     RestTemplate restTemplate = new RestTemplate(requestFactory);
-    {
-        restTemplate.setErrorHandler(new CustomResponseErrorHandler());
-    }
-
 
     public void setRestTemplate(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
-    @Override
-    public List<Director> getAllDirectors() {
-        return null;
-    }
 
-    //curl -v localhost:8080/rest-1.0-SNAPSHOT/directors
     @Override
     public List<DirectorDTO> getAllDirectorDTO() {
-        System.out.println(urlDirector);
         ResponseEntity responseEntity = restTemplate.getForEntity(url+urlDirectors, Object.class);
         List<DirectorDTO> directorsDTO = (List<DirectorDTO>)responseEntity.getBody();
         return directorsDTO;
@@ -52,21 +42,23 @@ public class DirectorConsumerImpl implements DirectorConsumer {
 
     @Override
     public int addDirector(Director director) {
-        return 0;
+            return restTemplate.postForObject(url + urlDirector, director, Integer.class);
     }
 
     @Override
-    public Director getDirectorById(Integer id) {
-        return null;
+    public Director getDirectorById(Integer directorId) {
+        ResponseEntity<Director> responseEntity = restTemplate
+                .getForEntity(url + urlDirector+"/{directorId}", Director.class, directorId);
+        return responseEntity.getBody();
     }
 
     @Override
     public void updateDirector(Director director) {
-
+        restTemplate.put(url+urlDirector, director);
     }
 
     @Override
-    public void deleteDirector(Integer directorID) {
-
+    public void deleteDirector(Integer directorId) {
+        restTemplate.delete(url+urlDirector+"/{directorId}", directorId);
     }
 }

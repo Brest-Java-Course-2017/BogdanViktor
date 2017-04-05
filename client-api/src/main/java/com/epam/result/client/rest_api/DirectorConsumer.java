@@ -13,12 +13,7 @@ public interface DirectorConsumer{
          * Get all directors list.
          * @return all directors list
          */
-        List<Director> getAllDirectors();
 
-        /**
-         * Get all directors list with average rating of their movies.
-         * @return all directors list with average rating of their movies.
-         */
         List<DirectorDTO> getAllDirectorDTO();
 
         /**

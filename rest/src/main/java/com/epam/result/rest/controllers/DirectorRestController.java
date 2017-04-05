@@ -18,11 +18,11 @@ import java.util.List;
 public class DirectorRestController {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
-    @ExceptionHandler({IllegalArgumentException.class})
-    public String incorrectDataError(){
-        return "{  \"response\" : \"Incorrect Data Error\' }";
-    }
+//    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
+//    @ExceptionHandler({IllegalArgumentException.class})
+//    public String incorrectDataError(){
+//        return "{  \"response\" : \"Incorrect Data Error\' }";
+//    }
 
     @Autowired
     private DirectorService directorService;
@@ -44,7 +44,10 @@ public class DirectorRestController {
     }
 
     /*
-    curl -H "Content-Type: application/json" -X POST -d '{"firstName":"xyz","re":"testName"}' -v localhost:8088/director
+    curl -H "Content-Type: application/json" -X POST -d '{"firstName":"xyz","lastName":"testName"}' -v localhost:8088/director
+     */
+    /*
+    curl -H "Content-Type: application/json" -X POST -d '{"firstName":"xyz","lastName":"testName"}' -v localhost:8088/rest-1.0-SNAPSHOT/director
      */
     @RequestMapping(value = "/director", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.CREATED)
@@ -62,6 +65,7 @@ public class DirectorRestController {
     }
 
     //curl -X DELETE -v localhost:8088/director/5
+    //curl -X DELETE -v localhost:8088/rest-1.0-SNAPSHOT/director/5
     @RequestMapping(value = "/director/{directorId}", method = RequestMethod.DELETE)
     @ResponseStatus(value = HttpStatus.OK)
     public void deleteDirectorById(@PathVariable(value = "directorId") Integer directorId){

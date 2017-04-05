@@ -8,12 +8,13 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.client.DefaultResponseErrorHandler;
 
 /**
  * @author  Bogdan Viktor
  */
 @ControllerAdvice
-public class RestErrorHandler {
+public class RestErrorHandler{
 
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -22,5 +23,12 @@ public class RestErrorHandler {
     public @ResponseBody String handleDataAccessException(DataAccessException ex) {
         LOGGER.debug("Handling DataAccessException: " + ex);
         return "DataAccessException: " + ex.getLocalizedMessage();
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public @ResponseBody String handleIllegalArgumentException(IllegalArgumentException ex) {
+        LOGGER.debug("Handling IllegalArgumentException: " + ex);
+        return "IllegalArgumentException: " + ex.getLocalizedMessage();
     }
 }

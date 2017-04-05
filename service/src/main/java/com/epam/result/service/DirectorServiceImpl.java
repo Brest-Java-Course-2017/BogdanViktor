@@ -56,7 +56,8 @@ public class DirectorServiceImpl implements DirectorService{
         try{
             if(directorDao.getDirectorByFirstAndLastName(director.getFirstName(), director.getLastName())!=null){
                 throw new IllegalArgumentException(String.format(
-                        "The director %s %s already exists in the database.",
+                        "The director: first name = \"%s\",  last name = \"%s\" " +
+                                "already exists in the database.",
                         director.getFirstName(), director.getLastName()));
             }
         } catch (DataAccessException ignore){  }

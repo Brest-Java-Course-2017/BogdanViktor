@@ -1,8 +1,8 @@
-package com.epam.result.webapp.controller;
+package com.epam.result.webapp.controllers;
 
+import com.epam.result.client.rest_api.DirectorConsumer;
+import com.epam.result.client.rest_api.MovieConsumer;
 import com.epam.result.dao.Director;
-import com.epam.result.service.DirectorService;
-import com.epam.result.service.MovieService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,17 +21,17 @@ public class DirectorController {
     private static final Logger LOGGER = LogManager.getLogger();
 
     @Autowired
-    MovieService movieService;
+    MovieConsumer movieConsumer;
 
     @Autowired
-    DirectorService directorService;
+    DirectorConsumer directorConsumer;
 
 
 
     @RequestMapping(value = "/directors")
     public String directors(Model model) {
         LOGGER.debug(" /directors page.");
-        List directorList = directorService.getAllDirectorDTO();
+        List directorList = directorConsumer.getAllDirectorDTO();
         model.addAttribute("directorList", directorList);
         return "directorsPage";
     }
@@ -42,7 +42,7 @@ public class DirectorController {
             @RequestParam("directorId") Integer directorId,
             Model model) {
         LOGGER.debug("director edit page, directorID={}", directorId);
-        Director director = directorService.getDirectorById(directorId);
+        Director director = directorConsumer.getDirectorById(directorId);
         model.addAttribute("director", director);
         return "directorEdit";
     }
@@ -53,8 +53,8 @@ public class DirectorController {
             @ModelAttribute Director director,
             Model model) {
         LOGGER.debug("update director");
-            directorService.updateDirector(director);
-            List directorList = directorService.getAllDirectorDTO();
+            directorConsumer.updateDirector(director);
+            List directorList = directorConsumer.getAllDirectorDTO();
             model.addAttribute("directorList", directorList);
             return "directorsPage";
     }
@@ -70,8 +70,8 @@ public class DirectorController {
     @ResponseStatus(value = HttpStatus.CREATED)
     public String addDirector(@ModelAttribute Director director, Model model) {
         LOGGER.debug("add director");
-            directorService.addDirector(director);
-            List directorList = directorService.getAllDirectorDTO();
+            directorConsumer.addDirector(director);
+            List directorList = directorConsumer.getAllDirectorDTO();
             model.addAttribute("directorList", directorList);
             return "directorsPage";
     }
@@ -82,8 +82,8 @@ public class DirectorController {
             @RequestParam("directorId") Integer directorId,
             Model model) {
         LOGGER.debug("director details page, directorId={}", directorId);
-        Director director = directorService.getDirectorById(directorId);
-        List moviesList = movieService.getAllMoviesCreatedByDirector(directorId);
+        Director director = directorConsumer.getDirectorById(directorId);
+        List moviesList = movieConsumer.getAllMoviesCreatedByDirector(directorId);
         model.addAttribute("director", director);
         model.addAttribute("moviesList", moviesList);
         return "directorDetails";
@@ -94,9 +94,9 @@ public class DirectorController {
             @RequestParam("directorId") Integer directorId,
             Model model) {
         LOGGER.debug("director delete page, directorID={}", directorId);
-        Director director = directorService.getDirectorById(directorId);
+        Director director = directorConsumer.getDirectorById(directorId);
         model.addAttribute("director", director);
-        List moviesList = movieService.getAllMoviesCreatedByDirector(directorId);
+        List moviesList = movieConsumer.getAllMoviesCreatedByDirector(directorId);
         if (moviesList != null && moviesList.size()>0) {
             model.addAttribute("moviesList", moviesList);
             return "directorError";
@@ -109,8 +109,8 @@ public class DirectorController {
             @RequestParam("directorId") Integer directorId,
             Model model) {
         LOGGER.debug("director delete");
-        directorService.deleteDirector(directorId);
-        List directorList = directorService.getAllDirectorDTO();
+        directorConsumer.deleteDirector(directorId);
+        List directorList = directorConsumer.getAllDirectorDTO();
         model.addAttribute("directorList", directorList);
         return "directorsPage";
     }

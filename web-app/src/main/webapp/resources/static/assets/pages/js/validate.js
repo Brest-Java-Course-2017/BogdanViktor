@@ -59,15 +59,15 @@ $(function(){
 
     $("#filter-form").validate({
         rules:{
-            fromDate:{
+            startDate:{
                 dateFormat:true,
                 isValidDate: true,
                 dateFromFuture: true
             },
-            toDate:{
+            endDate:{
                 dateFormat:true,
                 isValidDate: true,
-                greaterThan: "#fromDate"
+                greaterThan: "#startDate"
             }
         }
     });

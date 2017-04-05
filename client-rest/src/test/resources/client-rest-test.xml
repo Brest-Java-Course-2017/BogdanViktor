@@ -12,16 +12,19 @@
         </property>
     </bean>
 
-    <bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
-        <property name="messageConverters">
-            <list>
-                <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
-            </list>
-        </property>
-    </bean>
 
     <bean id="directorConsumer" class="com.epam.result.client.rest.DirectorConsumerImpl">
-        <property name="restTemplate" ref="restTemplate"/>
+        <property name="restTemplate" ref="mockRestTemplate"/>
     </bean>
+
+    <bean id="movieConsumer" class="com.epam.result.client.rest.MovieConsumerImpl">
+        <property name="restTemplate" ref="mockRestTemplate"/>
+    </bean>
+
+
+    <bean id="mockRestTemplate" class="org.easymock.EasyMock" factory-method="createMock">
+        <constructor-arg value="org.springframework.web.client.RestTemplate"/>
+    </bean>
+
 
 </beans>

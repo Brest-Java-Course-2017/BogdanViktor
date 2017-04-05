@@ -21,7 +21,6 @@
         <module>web-app</module>
         <module>client-api</module>
         <module>client-rest</module>
-        <module>web-app-rest</module>
     </modules>
 
     <name>Aggregator for movies-management</name>

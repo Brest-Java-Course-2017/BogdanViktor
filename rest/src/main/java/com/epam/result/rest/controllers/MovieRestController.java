@@ -26,18 +26,20 @@ public class MovieRestController {
     @Autowired
     MovieService movieService;
 
-    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
-    @ExceptionHandler({IllegalArgumentException.class})
-    public String incorrectDataError(){
-        return "{  \"response\" : \"Incorrect Data Error\' }";
-    }
 
     //curl -v localhost:8088/movies
     @RequestMapping(value = "/movies", method = RequestMethod.GET)
     public @ResponseBody
     List<MovieDTO> getAllMoviesDTO(){
-        LOGGER.debug("getAllDirectorsWithMoviesRating()");
+        LOGGER.debug("getAllMoviesDTO()");
         return movieService.getAllMovieDTO();
+    }
+
+    @RequestMapping(value = "/movies/createdBy/{directorId}", method = RequestMethod.GET)
+    public @ResponseBody
+    List<Movie> getAllMoviesCreatedByDirector(@PathVariable(value = "directorId")Integer directorId){
+        LOGGER.debug("getAllMoviesCreatedByDirector()");
+        return movieService.getAllMoviesCreatedByDirector(directorId);
     }
 
 
@@ -59,6 +61,14 @@ public class MovieRestController {
     public @ResponseBody Movie getMovieById(@PathVariable(value = "movieId") Integer movieId){
         LOGGER.debug("getMovieById({})", movieId);
         return movieService.getMovieById(movieId);
+    }
+
+    //curl -v localhost:8088/movieDTO/1
+    @RequestMapping(value = "/movieDTO/{movieId}", method = RequestMethod.GET)
+    @ResponseStatus(value = HttpStatus.FOUND)
+    public @ResponseBody MovieDTO getMovieDTOById(@PathVariable(value = "movieId") Integer movieId){
+        LOGGER.debug("getMovieById({})", movieId);
+        return movieService.getMovieDTOById(movieId);
     }
 
 //    curl -H "Content-Type: application/json" -X POST -d '{"movieTitle":"test","releaseDate":"2015-12-09","rating":"6.5","movieDirectorId":"2"}' -v localhost:8088/movie

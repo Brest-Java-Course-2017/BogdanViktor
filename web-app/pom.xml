@@ -15,30 +15,29 @@
 
 
     <dependencies>
-        <dependency>
-            <groupId>com.epam.result</groupId>
-            <artifactId>service</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.epam.result</groupId>
-            <artifactId>service-api</artifactId>
-        </dependency>
-        <dependency>
+            <dependency>
             <groupId>com.epam.result</groupId>
             <artifactId>test-db</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.epam.result</groupId>
-            <artifactId>dao-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.epam.result</groupId>
-            <artifactId>dao</artifactId>
-        </dependency>
-        <dependency>
+               <dependency>
             <groupId>com.epam.result</groupId>
             <artifactId>model</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.epam.result</groupId>
+            <artifactId>client-rest</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.epam.result</groupId>
+            <artifactId>client-api</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.epam.result</groupId>
+            <artifactId>client-rest</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
 
         <dependency>
             <groupId>org.springframework</groupId>
@@ -97,6 +96,7 @@
             <artifactId>hamcrest-all</artifactId>
             <version>1.3</version>
         </dependency>
+
 
     </dependencies>
 

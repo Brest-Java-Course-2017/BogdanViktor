@@ -18,12 +18,6 @@ public interface MovieConsumer {
     List<Movie> getAllMoviesCreatedByDirector(Integer directorID);
 
     /**
-     * Get all movies list.
-     * @return all movies list
-     */
-    List<Movie> getAllMovies();
-
-    /**
      * Get movie by ID.
      * @param movieId is movie identifier.
      * @return movie.
@@ -39,11 +33,11 @@ public interface MovieConsumer {
     /**
      * Get list of all movieDTO(movie with director's first and last name)
      * with a date filter.
-     * @param fromDate start date.
-     * @param toDate finish date.
+     * @param startDate start date.
+     * @param endDate finish date.
      * @return list of movieDTO.
      */
-    List<MovieDTO> getAllMovieDTOWithDateFilter(Date fromDate, Date toDate);
+    List<MovieDTO> getAllMovieDTOWithDateFilter(Date startDate, Date endDate);
 
     /**
      * Get movieDTO(movie with director's first and last name) by ID.

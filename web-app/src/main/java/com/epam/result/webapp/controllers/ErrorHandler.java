@@ -1,4 +1,4 @@
-package com.epam.result.webapp.controller;
+package com.epam.result.webapp.controllers;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

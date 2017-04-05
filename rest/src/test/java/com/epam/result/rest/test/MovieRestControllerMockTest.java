@@ -18,8 +18,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -44,6 +47,7 @@ public class MovieRestControllerMockTest {
     private MockMvc mockMvc;
 
     private static final Movie TEST_MOVIE = new Movie(2,"testMovie", new Date(100, 2, 3), 4.0, 3);
+    private static final MovieDTO TEST_MOVIE_DTO = new MovieDTO(2,"testMovie", new Date(100, 2, 3), 4.0, "firstName", "lastName");
     private static final Logger LOGGER = LogManager.getLogger();
 
     @Before
@@ -139,6 +143,41 @@ public class MovieRestControllerMockTest {
         .andDo(print())
         .andExpect(status().isOk());
     }
+
+
+    @Test
+    public void test_get_all_movies_created_by_director() throws Exception{
+        LOGGER.debug("get_all_movies_created_by_director()");
+        List<Movie> movies = new ArrayList<>();
+        movies.add(new Movie(2,"testMovie2", new Date(100, 2, 3), 4.0, 3));
+        movies.add(new Movie(1,"testMovie1", new Date(105, 5, 5), 7.0, 1));
+        expect(movieService.getAllMoviesCreatedByDirector(new Integer(3)))
+                .andReturn(movies);
+        replay(movieService);
+
+        mockMvc.perform(get("/movies/createdBy/3")
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+
+    @Test
+    public void test_get_movieDTO_by_id() throws Exception {
+        LOGGER.debug("test_get_movieDTO_by_id");
+
+        expect(movieService.getMovieDTOById(2)).andReturn(TEST_MOVIE_DTO);
+        replay(movieService);
+
+        String movieDTO = new ObjectMapper().writeValueAsString(TEST_MOVIE_DTO);
+
+        mockMvc.perform(get("/movieDTO/2")
+                .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isFound())
+                .andExpect(content().string(movieDTO));
+    }
+
 
 }
 
