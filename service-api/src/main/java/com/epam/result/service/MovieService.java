@@ -2,7 +2,6 @@ package com.epam.result.service;
 
 import com.epam.result.dao.Movie;
 import com.epam.result.dao.MovieDTO;
-import org.springframework.dao.DataAccessException;
 
 import java.util.Date;
 import java.util.List;

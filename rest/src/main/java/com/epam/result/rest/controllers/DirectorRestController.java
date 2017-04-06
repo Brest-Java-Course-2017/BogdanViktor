@@ -18,11 +18,6 @@ import java.util.List;
 public class DirectorRestController {
     private static final Logger LOGGER = LogManager.getLogger();
 
-//    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
-//    @ExceptionHandler({IllegalArgumentException.class})
-//    public String incorrectDataError(){
-//        return "{  \"response\" : \"Incorrect Data Error\' }";
-//    }
 
     @Autowired
     private DirectorService directorService;

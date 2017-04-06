@@ -6,11 +6,14 @@
         <File name="File" fileName="logs/server.log">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </File>
+        <Async name="Async">
+            <AppenderRef ref="File"/>
+        </Async>
     </Appenders>
     <Loggers>
         <Root level="ERROR">
             <appender-ref ref="Console"/>
-            <appender-ref ref="File"/>
+            <appender-ref ref="Async"/>
         </Root>
         <Logger name="org.springframework" level="INFO"/>
         <Logger name="com.epam" level="DEBUG"/>

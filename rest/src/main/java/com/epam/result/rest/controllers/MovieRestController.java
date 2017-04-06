@@ -67,7 +67,7 @@ public class MovieRestController {
     @RequestMapping(value = "/movieDTO/{movieId}", method = RequestMethod.GET)
     @ResponseStatus(value = HttpStatus.FOUND)
     public @ResponseBody MovieDTO getMovieDTOById(@PathVariable(value = "movieId") Integer movieId){
-        LOGGER.debug("getMovieById({})", movieId);
+        LOGGER.debug("getMovieDTOById({})", movieId);
         return movieService.getMovieDTOById(movieId);
     }
 

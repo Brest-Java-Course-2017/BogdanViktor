@@ -2,7 +2,6 @@ package com.epam.result.service;
 
 import com.epam.result.dao.Director;
 import com.epam.result.dao.DirectorDTO;
-import org.springframework.dao.DataAccessException;
 
 import java.util.List;
 
@@ -44,13 +43,13 @@ public interface DirectorService {
      * the number of rows affected in data base.
      * @param director director.
      */
-    void updateDirector(Director director) throws DataAccessException;
+    void updateDirector(Director director);
 
     /**
      * Deletes the director in the database and returns
      * the number of rows affected in data base.
      * @param directorID  is director's ID.
      */
-    void deleteDirector(Integer directorID) throws DataAccessException;
+    void deleteDirector(Integer directorID);
 
 }

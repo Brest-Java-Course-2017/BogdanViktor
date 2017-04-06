@@ -25,6 +25,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * @author  Bogdan Viktor
  */
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:client-rest-test.xml"})
 public class DirectorConsumerImplMockTest {

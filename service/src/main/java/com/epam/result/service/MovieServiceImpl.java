@@ -7,6 +7,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.text.SimpleDateFormat;
@@ -17,6 +19,10 @@ import java.util.List;
  * The {@code MovieServiceImpl} - is an implementation of interface "MovieService".
  * @author  Bogdan Viktor
  */
+
+
+@Service
+@Transactional
 public class MovieServiceImpl implements MovieService{
     private static final Logger LOGGER = LogManager.getLogger();
     private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd");
@@ -73,7 +79,7 @@ public class MovieServiceImpl implements MovieService{
     }
 
     @Override
-    public MovieDTO getMovieDTOById(Integer movieId) throws DataAccessException{
+    public MovieDTO getMovieDTOById(Integer movieId){
         LOGGER.debug("getMovieDTOById({})", movieId);
         Assert.notNull(movieId, "Movie ID should not be null.");
         return movieDao.getMovieDTOById(movieId);

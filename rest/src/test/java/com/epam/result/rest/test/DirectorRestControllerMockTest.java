@@ -1,38 +1,37 @@
 package com.epam.result.rest.test;
+import com.epam.result.dao.Director;
+import com.epam.result.dao.DirectorDTO;
+import com.epam.result.rest.controllers.DirectorRestController;
+import com.epam.result.service.DirectorService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import org.springframework.http.MediaType;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+
+
+import javax.annotation.Resource;
+import java.util.Arrays;
+
+import static org.easymock.EasyMock.*;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
 /**
  * @author  Bogdan Viktor
  */
-
-        import com.epam.result.dao.Director;
-        import com.epam.result.dao.DirectorDTO;
-        import com.epam.result.rest.controllers.DirectorRestController;
-        import com.epam.result.service.DirectorService;
-        import com.fasterxml.jackson.databind.ObjectMapper;
-        import org.apache.logging.log4j.LogManager;
-        import org.apache.logging.log4j.Logger;
-        import org.junit.After;
-        import org.junit.Before;
-        import org.junit.Test;
-        import org.junit.runner.RunWith;
-        import org.springframework.beans.factory.annotation.Autowired;
-        import org.springframework.test.context.ContextConfiguration;
-        import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-        import org.springframework.test.web.servlet.MockMvc;
-        import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-        import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-        import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-        import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-        import org.springframework.http.MediaType;
-        import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-
-
-        import javax.annotation.Resource;
-        import java.util.Arrays;
-
-        import static org.easymock.EasyMock.*;
-
-        import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -42,7 +41,6 @@ public class DirectorRestControllerMockTest {
 
     @Resource
     private DirectorRestController directorRestController;
-
 
     @Autowired
     private DirectorService directorService;

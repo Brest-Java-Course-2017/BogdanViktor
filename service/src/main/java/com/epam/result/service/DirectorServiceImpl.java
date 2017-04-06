@@ -30,20 +30,20 @@ public class DirectorServiceImpl implements DirectorService{
     }
 
     @Override
-    public List<Director> getAllDirectors() throws DataAccessException {
+    public List<Director> getAllDirectors()  {
         LOGGER.debug("getAllDirectors()");
         return directorDao.getAllDirectors();
     }
 
     @Override
-    public List<DirectorDTO> getAllDirectorDTO() throws DataAccessException {
+    public List<DirectorDTO> getAllDirectorDTO()  {
         LOGGER.debug("getAllDirectorDTO()");
         return directorDao.getAllDirectorDTO();
     }
 
 
     @Override
-    public int addDirector(Director director) throws DataAccessException {
+    public int addDirector(Director director)  {
         Assert.notNull(director, "Director should not be null.");
         LOGGER.debug("addDirector({})", director.getFirstName()+" "+director.getLastName());
         Assert.isNull(director.getDirectorId(), "Director's ID should be null.");
@@ -72,7 +72,7 @@ public class DirectorServiceImpl implements DirectorService{
     }
 
     @Override
-    public void updateDirector(Director director) throws DataAccessException {
+    public void updateDirector(Director director)  {
         Assert.notNull(director, "Director should not be null.");
         LOGGER.debug("updateDirector({})", director.getFirstName()+" "+director.getLastName());
         Assert.notNull(director.getDirectorId(), "Director's ID should not be null.");
@@ -98,7 +98,7 @@ public class DirectorServiceImpl implements DirectorService{
     }
 
     @Override
-    public void deleteDirector(Integer directorID) throws DataAccessException {
+    public void deleteDirector(Integer directorID)  {
         Assert.notNull(directorID, "Director's ID should not be null");
         LOGGER.debug("deleteDirector({})", directorID);
         int numberOfRowsAffected = directorDao.deleteDirector(directorID);
@@ -106,5 +106,9 @@ public class DirectorServiceImpl implements DirectorService{
             throw new IllegalArgumentException(String.format(
                     "The director with ID=%d does not exist in the database.", directorID));
         }
+
+
     }
+
+
 }

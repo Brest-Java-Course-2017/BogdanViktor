@@ -31,4 +31,8 @@
         <property name="restTemplate" ref="restTemplate"/>
     </bean>
 
+    <bean id="movieConsumer" class="com.epam.result.client.rest.MovieConsumerImpl">
+        <property name="restTemplate" ref="restTemplate"/>
+    </bean>
+
 </beans>

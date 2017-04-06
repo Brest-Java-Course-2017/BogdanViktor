@@ -5,7 +5,6 @@ import com.epam.result.dao.DirectorDAO;
 import com.epam.result.dao.DirectorDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.h2.jdbc.JdbcSQLException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
