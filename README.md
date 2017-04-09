@@ -1,6 +1,7 @@
 Bogdan Viktor
 
 MOVIE MANAGEMENT
+
 This is a simple web application in which you can add, edit and delete directors and their movies.
 
 Short description of how you can run this application.
