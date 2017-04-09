@@ -37,7 +37,7 @@ public class MovieController {
 
     @GetMapping(value = "/movies")
     public String movies(Model model) {
-        LOGGER.debug(" /movies page.");
+        LOGGER.debug(" \"movies\" page.");
         List moviesList = movieConsumer.getAllMovieDTO();
         model.addAttribute("moviesList", moviesList);
         return "moviesPage";
@@ -85,7 +85,7 @@ public class MovieController {
 
     @RequestMapping(value = "/movie/edit", method = RequestMethod.GET)
     public String editMoviePage(@RequestParam("movieId") Integer movieId, Model model) {
-        LOGGER.debug(" movieEdit page()");
+        LOGGER.debug(" \"movieEdit\" page()");
         Movie movie = movieConsumer.getMovieById(movieId);
         List directorList = directorConsumer.getAllDirectorDTO();
         model.addAttribute("directorList", directorList);
@@ -110,7 +110,7 @@ public class MovieController {
 
     @RequestMapping(value = "/movie/delete", method = RequestMethod.GET)
     public String deleteMoviePage(@RequestParam("movieId") Integer movieId, Model model) {
-        LOGGER.debug(" movieDelete page()");
+        LOGGER.debug(" \"movieDelete\" page()");
         MovieDTO movie = movieConsumer.getMovieDTOById(movieId);
         model.addAttribute("movie", movie);
         return "movieDelete";

@@ -62,7 +62,7 @@ public class DirectorController {
 
     @RequestMapping(value = "/director/add", method = RequestMethod.GET)
     public String directorAdd(){
-        LOGGER.debug("add new director page");
+        LOGGER.debug("\"add new director\" page");
         return "directorAdd";
     }
 
@@ -81,7 +81,7 @@ public class DirectorController {
     public String directorDetails(
             @RequestParam("directorId") Integer directorId,
             Model model) {
-        LOGGER.debug("director details page, directorId={}", directorId);
+        LOGGER.debug("\"director details\" page, directorId={}", directorId);
         Director director = directorConsumer.getDirectorById(directorId);
         List moviesList = movieConsumer.getAllMoviesCreatedByDirector(directorId);
         model.addAttribute("director", director);
@@ -93,7 +93,7 @@ public class DirectorController {
     public String directorDeletePage(
             @RequestParam("directorId") Integer directorId,
             Model model) {
-        LOGGER.debug("director delete page, directorID={}", directorId);
+        LOGGER.debug("\"director delete\" page, directorID={}", directorId);
         Director director = directorConsumer.getDirectorById(directorId);
         model.addAttribute("director", director);
         List moviesList = movieConsumer.getAllMoviesCreatedByDirector(directorId);

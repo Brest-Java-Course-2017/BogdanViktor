@@ -3,6 +3,8 @@ package com.epam.result.client.rest;
 import com.epam.result.client.rest_api.MovieConsumer;
 import com.epam.result.dao.Movie;
 import com.epam.result.dao.MovieDTO;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.ClientHttpRequestFactory;
@@ -18,7 +20,7 @@ import java.util.List;
  */
 public class MovieConsumerImpl implements MovieConsumer {
     private static final SimpleDateFormat FORMATTER = new SimpleDateFormat("yyyy-MM-dd");
-
+    private static final Logger LOGGER = LogManager.getLogger();
 
     @Value("${protocol}://${host}:${port}${prefix}")
     private String url;
@@ -41,6 +43,7 @@ public class MovieConsumerImpl implements MovieConsumer {
 
     @Override
     public List<Movie> getAllMoviesCreatedByDirector(Integer directorID) {
+        LOGGER.debug("getAllMoviesCreatedByDirector()");
         ResponseEntity responseEntity = restTemplate.getForEntity(url+urlMovies+"/createdBy/{directorId}",
                 Object.class, directorID);
         List<Movie> movies = (List<Movie>)responseEntity.getBody();
@@ -50,6 +53,7 @@ public class MovieConsumerImpl implements MovieConsumer {
 
     @Override
     public Movie getMovieById(Integer movieId) {
+        LOGGER.debug("getMovieById()");
         ResponseEntity<Movie> responseEntity = restTemplate
                 .getForEntity(url + urlMovie+"/{movieId}", Movie.class, movieId);
         return responseEntity.getBody();
@@ -57,6 +61,7 @@ public class MovieConsumerImpl implements MovieConsumer {
 
     @Override
     public List<MovieDTO> getAllMovieDTO() {
+        LOGGER.debug("getAllMovieDTO()");
         ResponseEntity responseEntity = restTemplate.getForEntity(url+urlMovies, Object.class);
         List<MovieDTO> moviesDTO = (List<MovieDTO>)responseEntity.getBody();
         return moviesDTO;
@@ -64,6 +69,7 @@ public class MovieConsumerImpl implements MovieConsumer {
 
     @Override
     public List<MovieDTO> getAllMovieDTOWithDateFilter(Date startDate, Date endDate) {
+        LOGGER.debug("getAllMovieDTOWithDateFilter()");
         String startDateString = startDate==null?"":FORMATTER.format(startDate);
         String endDateString = endDate==null?"":FORMATTER.format(endDate);
 
@@ -78,6 +84,7 @@ public class MovieConsumerImpl implements MovieConsumer {
 
     @Override
     public MovieDTO getMovieDTOById(Integer movieId) {
+        LOGGER.debug("getMovieDTOById()");
         ResponseEntity<MovieDTO> responseEntity = restTemplate
                 .getForEntity(url +"/movieDTO/{movieId}", MovieDTO.class, movieId);
         return responseEntity.getBody();
@@ -86,16 +93,19 @@ public class MovieConsumerImpl implements MovieConsumer {
 
     @Override
     public int addMovie(Movie movie) {
+        LOGGER.debug("addMovie()");
         return restTemplate.postForObject(url + urlMovie, movie, Integer.class);
     }
 
     @Override
     public void updateMovie(Movie movie) {
+        LOGGER.debug("updateMovie()");
         restTemplate.put(url+urlMovie, movie);
     }
 
     @Override
     public void deleteMovie(Integer movieID) {
+        LOGGER.debug("deleteMovie()");
         restTemplate.delete(url+urlMovie+"/{movieID}", movieID);
     }
 

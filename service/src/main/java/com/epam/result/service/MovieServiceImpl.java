@@ -116,7 +116,7 @@ public class MovieServiceImpl implements MovieService{
         Assert.notNull(movie, "Movie should not be null.");
         Assert.notNull(movie.getMovieTitle(), "The movie title should not be null.");
         Assert.notNull(movie.getReleaseDate(), "Movie release date should not be null");
-        LOGGER.debug("addMovie({})", movie.getMovieTitle()+", "+movie.getReleaseDateAsString());
+        LOGGER.debug("updateMovie({})", movie.getMovieTitle()+", "+movie.getReleaseDateAsString());
         Assert.notNull(movie.getMovieId(), "Movie ID should not be null.");
         Assert.hasText(movie.getMovieTitle(), "Movie title should not be empty");
         Assert.isTrue(movie.getMovieTitle().length() <= 60, "The length of movie title " +

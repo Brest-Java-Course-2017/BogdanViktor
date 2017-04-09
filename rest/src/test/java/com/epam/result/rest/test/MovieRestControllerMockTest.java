@@ -7,6 +7,7 @@ import com.epam.result.service.MovieService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,7 @@ public class MovieRestControllerMockTest {
 
     private static final Movie TEST_MOVIE = new Movie(2,"testMovie", new Date(100, 2, 3), 4.0, 3);
     private static final MovieDTO TEST_MOVIE_DTO = new MovieDTO(2,"testMovie", new Date(100, 2, 3), 4.0, "firstName", "lastName");
+    private static final MovieDTO TEST_MOVIE_DTO2 = new MovieDTO(3,"testMovie2", new Date(101, 2, 3), 6.0, "firstName2", "lastName2");
     private static final Logger LOGGER = LogManager.getLogger();
 
     @Before
@@ -67,7 +69,7 @@ public class MovieRestControllerMockTest {
     public void test_get_all_moviesDTO() throws Exception{
         LOGGER.debug("get_all_moviesDTO_test()");
         expect(movieService.getAllMovieDTO())
-                .andReturn(Arrays.asList(new MovieDTO(), new MovieDTO()));
+                .andReturn(Arrays.asList(TEST_MOVIE_DTO, TEST_MOVIE_DTO2));
         replay(movieService);
 
         mockMvc.perform(get("/movies")

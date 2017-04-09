@@ -60,7 +60,7 @@ public class MovieRestController {
     @ResponseStatus(value = HttpStatus.FOUND)
     public @ResponseBody Movie getMovieById(@PathVariable(value = "movieId") Integer movieId){
         LOGGER.debug("getMovieById({})", movieId);
-        return movieService.getMovieById(movieId);
+            return movieService.getMovieById(movieId);
     }
 
     //curl -v localhost:8088/movieDTO/1
@@ -83,7 +83,7 @@ public class MovieRestController {
     @RequestMapping(value = "/movie", method = RequestMethod.PUT)
     @ResponseStatus(value = HttpStatus.ACCEPTED)
     public void updateMovie(@RequestBody Movie movie){
-        LOGGER.debug("updateDirector({})", movie.getMovieTitle()+" "+movie.getReleaseDateAsString());
+        LOGGER.debug("updateMovie({})", movie.getMovieTitle()+" "+movie.getReleaseDateAsString());
         movieService.updateMovie(movie);
     }
 
