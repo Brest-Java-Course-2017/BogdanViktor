@@ -10,8 +10,6 @@
     <link rel="stylesheet" href="#" th:href="@{/resources/static/assets/bootstrap/bootstrap-theme.min.css}">
     <link rel="stylesheet" href="#" th:href="@{/resources/static/assets/pages/css/custom.css}">
 
-    <script type="text/javascript" th:src="@{/resources/static/assets/bootstrap/bootstrap.min.js}"></script>
-
 </head>
 
 <body>
@@ -65,7 +63,6 @@
                             <tbody th:remove="all-but-first">
                             <tr th:each="movie : ${moviesList}">
                                 <td th:text="${movie.movieTitle}">Movie title</td>
-                                <!--<td th:text="${#dates.format(movie.releaseDate, 'yyyy-MM-dd')}">2013-08-07</td>-->
                                 <td th:text="${movie.releaseDate}">2013-08-07</td>
                                 <td th:text="${movie.rating}">7.6</td>
                                 <td>
@@ -91,10 +88,6 @@
 
 
 </div>
-
-<script type="text/javascript" th:src="@{/resources/static/assets/jquery/jquery-3.1.1.min.js}"></script>
-<script type="text/javascript" th:src="@{/resources/static/assets/jquery/jquery.validate.js}"></script>
-<script type="text/javascript" th:src="@{/resources/static/assets/pages/js/validate.js}"></script>
 
 </body>
 </html>
