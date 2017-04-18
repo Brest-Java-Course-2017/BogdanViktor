@@ -45,7 +45,7 @@ public class DirectorServiceImpl implements DirectorService{
     @Override
     public int addDirector(Director director)  {
         Assert.notNull(director, "Director should not be null.");
-        LOGGER.debug("addDirector({})", director.getFirstName()+" "+director.getLastName());
+        LOGGER.debug("addDirector({} {})", director.getFirstName(), director.getLastName());
         Assert.isNull(director.getDirectorId(), "Director's ID should be null.");
         Assert.hasText(director.getFirstName(), "Director's first name should not be null.");
         Assert.isTrue(director.getFirstName().length() <= 30, "The length of director's first name " +
@@ -74,7 +74,7 @@ public class DirectorServiceImpl implements DirectorService{
     @Override
     public void updateDirector(Director director)  {
         Assert.notNull(director, "Director should not be null.");
-        LOGGER.debug("updateDirector({})", director.getFirstName()+" "+director.getLastName());
+        LOGGER.debug("updateDirector({} {})", director.getFirstName(), director.getLastName());
         Assert.notNull(director.getDirectorId(), "Director's ID should not be null.");
         Assert.hasText(director.getFirstName(), "Director's first name should not be null.");
         Assert.isTrue(director.getFirstName().length() <= 30, "The length of director's first name " +

@@ -15,7 +15,7 @@
             <appender-ref ref="Console"/>
             <appender-ref ref="Async"/>
         </Root>
-        <Logger name="org.springframework" level="INFO"/>
+        <Logger name="org.springframework" level="ALL"/>
         <Logger name="com.epam" level="DEBUG"/>
     </Loggers>
 </Configuration>

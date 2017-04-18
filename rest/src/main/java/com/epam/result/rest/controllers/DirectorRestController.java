@@ -55,7 +55,7 @@ public class DirectorRestController {
     @RequestMapping(value = "/director", method = RequestMethod.PUT)
     @ResponseStatus(value = HttpStatus.ACCEPTED)
     public void updateDirector(@RequestBody Director director){
-        LOGGER.debug("updateDirector({})", director.getFirstName()+" "+director.getLastName());
+        LOGGER.debug("updateDirector({} {})", director.getFirstName(), director.getLastName());
         directorService.updateDirector(director);
     }
 

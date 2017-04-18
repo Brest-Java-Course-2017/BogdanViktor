@@ -49,9 +49,9 @@ public class MovieRestController {
     List<MovieDTO> getAllMoviesDTOWithDateFilter(
             @RequestParam(value = "startDate",required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
             @RequestParam(value = "endDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate){
-        LOGGER.debug("getAllMovieDTOWithDateFilter({})",
-                (startDate==null?"null":FORMATTER.format(startDate))+", "+
-                        (endDate==null?"null":FORMATTER.format(endDate)));
+        LOGGER.debug("getAllMovieDTOWithDateFilter({}, {})",
+                (startDate==null?"null":FORMATTER.format(startDate)),
+                (endDate==null?"null":FORMATTER.format(endDate)));
         return movieService.getAllMovieDTOWithDateFilter(startDate, endDate);
     }
 
@@ -75,7 +75,7 @@ public class MovieRestController {
     @RequestMapping(value = "/movie", method = RequestMethod.POST)
     @ResponseStatus(value = HttpStatus.CREATED)
     public @ResponseBody Integer addMovie(@RequestBody Movie movie){
-        LOGGER.debug("addMovie({})", movie.getMovieTitle()+" "+movie.getReleaseDateAsString());
+        LOGGER.debug("addMovie({}, {})", movie.getMovieTitle(), movie.getReleaseDateAsString());
         return movieService.addMovie(movie);
     }
 
@@ -83,7 +83,7 @@ public class MovieRestController {
     @RequestMapping(value = "/movie", method = RequestMethod.PUT)
     @ResponseStatus(value = HttpStatus.ACCEPTED)
     public void updateMovie(@RequestBody Movie movie){
-        LOGGER.debug("updateMovie({})", movie.getMovieTitle()+" "+movie.getReleaseDateAsString());
+        LOGGER.debug("updateMovie({}, {})", movie.getMovieTitle(),movie.getReleaseDateAsString());
         movieService.updateMovie(movie);
     }
 

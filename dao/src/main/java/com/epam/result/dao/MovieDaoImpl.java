@@ -84,7 +84,7 @@ public class MovieDaoImpl implements MovieDAO{
 
     @Override
     public Movie getMovieByTitleAndReleaseDate(String movieTitle, Date date){
-        LOGGER.debug("getMovieByTitleAndReleaseDate({})", movieTitle+","+FORMATTER.format(date));
+        LOGGER.debug("getMovieByTitleAndReleaseDate({}, {})", movieTitle, FORMATTER.format(date));
         Map<String, Object> params = new HashMap<>();
         params.put(MOVIE_TITLE, movieTitle);
         params.put(RELEASE_DATE, FORMATTER.format(date));
@@ -117,7 +117,7 @@ public class MovieDaoImpl implements MovieDAO{
 
     @Override
     public List<MovieDTO> getAllMovieDTOWithDateFilter(Date startDate, Date endDate) {
-        LOGGER.debug("getAllMovieDTOWithDateFilter({})", FORMATTER.format(startDate)+", "+ FORMATTER.format(endDate));
+        LOGGER.debug("getAllMovieDTOWithDateFilter({}, {})", FORMATTER.format(startDate), FORMATTER.format(endDate));
 
         Map<String, Object> params = new HashMap<>();
         params.put(START_DATE, FORMATTER.format(startDate));
@@ -128,7 +128,7 @@ public class MovieDaoImpl implements MovieDAO{
 
     @Override
     public int addMovie(Movie movie) {
-        LOGGER.debug("addMovie({})", movie.getMovieTitle()+", "+movie.getReleaseDateAsString());
+        LOGGER.debug("addMovie({}, {})", movie.getMovieTitle(), movie.getReleaseDateAsString());
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
@@ -144,7 +144,7 @@ public class MovieDaoImpl implements MovieDAO{
 
     @Override
     public int updateMovie(Movie movie) {
-        LOGGER.debug("updateMovie({})", movie.getMovieTitle()+" "+movie.getReleaseDateAsString());
+        LOGGER.debug("updateMovie({}, {})", movie.getMovieTitle(), movie.getReleaseDateAsString());
         Map<String, Object> params = new HashMap<>();
         params.put(MOVIE_ID, movie.getMovieId());
         params.put(MOVIE_TITLE, movie.getMovieTitle());

@@ -1,0 +1,6 @@
+rootProject.name = 'movies-management'
+include 'client-api', 'client-rest', 'dao',
+        'dao-api', 'model', 'rest', 'service', 'service-api', 'test-db',
+        'web-app'
+
+

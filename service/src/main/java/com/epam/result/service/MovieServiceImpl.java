@@ -58,9 +58,9 @@ public class MovieServiceImpl implements MovieService{
 
     @Override
     public List<MovieDTO> getAllMovieDTOWithDateFilter(Date startDate, Date endDate) {
-        LOGGER.debug("getAllMovieDTOWithDateFilter({})",
-                (startDate==null?"null":FORMATTER.format(startDate))+", "+
-                        (endDate==null?"null":FORMATTER.format(endDate)));
+        LOGGER.debug("getAllMovieDTOWithDateFilter({}, {})",
+                (startDate==null?"null":FORMATTER.format(startDate)),
+                (endDate==null?"null":FORMATTER.format(endDate)));
 
         if(startDate==null && endDate==null) return movieDao.getAllMovieDTO();
         if(startDate==null) startDate = MIN_DATE;
@@ -90,7 +90,7 @@ public class MovieServiceImpl implements MovieService{
         Assert.notNull(movie, "Movie should not be null.");
         Assert.notNull(movie.getMovieTitle(), "The movie title should not be null.");
         Assert.notNull(movie.getReleaseDate(), "Movie release date should not be null");
-        LOGGER.debug("addMovie({})", movie.getMovieTitle()+", "+movie.getReleaseDateAsString());
+        LOGGER.debug("addMovie({}, {})", movie.getMovieTitle(), movie.getReleaseDateAsString());
         Assert.isNull(movie.getMovieId(), "Movie ID should be null.");
         Assert.hasText(movie.getMovieTitle(), "Movie title should not be empty");
         Assert.isTrue(movie.getMovieTitle().length() <= 60, "The length of movie title " +
@@ -116,7 +116,7 @@ public class MovieServiceImpl implements MovieService{
         Assert.notNull(movie, "Movie should not be null.");
         Assert.notNull(movie.getMovieTitle(), "The movie title should not be null.");
         Assert.notNull(movie.getReleaseDate(), "Movie release date should not be null");
-        LOGGER.debug("updateMovie({})", movie.getMovieTitle()+", "+movie.getReleaseDateAsString());
+        LOGGER.debug("updateMovie({}, {})", movie.getMovieTitle(), movie.getReleaseDateAsString());
         Assert.notNull(movie.getMovieId(), "Movie ID should not be null.");
         Assert.hasText(movie.getMovieTitle(), "Movie title should not be empty");
         Assert.isTrue(movie.getMovieTitle().length() <= 60, "The length of movie title " +

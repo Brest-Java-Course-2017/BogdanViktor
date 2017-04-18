@@ -85,7 +85,7 @@ public class DirectorDaoImpl implements DirectorDAO {
 
     @Override
     public Director getDirectorByFirstAndLastName(String firstName, String lastName){
-        LOGGER.debug("getDirectorByFirstNameAndLastName({})", firstName+", "+lastName);
+        LOGGER.debug("getDirectorByFirstNameAndLastName({} {})", firstName, lastName);
         Map<String, Object> params = new HashMap<>();
         params.put(FIRST_NAME, firstName);
         params.put(LAST_NAME, lastName);
@@ -95,7 +95,7 @@ public class DirectorDaoImpl implements DirectorDAO {
 
     @Override
     public int addDirector(Director director) {
-        LOGGER.debug("addDirector({})", director.getFirstName()+" "+director.getLastName());
+        LOGGER.debug("addDirector({} {})", director.getFirstName(),director.getLastName());
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
@@ -108,7 +108,7 @@ public class DirectorDaoImpl implements DirectorDAO {
 
     @Override
     public int updateDirector(Director director) {
-        LOGGER.debug("updateDirector({})", director.getFirstName()+" "+director.getLastName());
+        LOGGER.debug("updateDirector({} {})", director.getFirstName(), director.getLastName());
         Map<String, Object> params = new HashMap<>();
         params.put(DIRECTOR_ID, director.getDirectorId());
         params.put(FIRST_NAME, director.getFirstName());
