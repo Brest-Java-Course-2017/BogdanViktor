@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MovieManagement. Javascript client</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-theme.min.css" rel="stylesheet">
+
+
+</head>
+
+<p>
+<nav class="navbar navbar-toggleable-sm navbar-inverse fixed-top bg-inverse">
+    <a class="navbar-brand" href="index.html">
+        <span class="hidden-folded inline">Movies</span>
+    </a>
+    <a class="navbar-brand" href="directors.html">
+        <span class="hidden-folded inline">Directors</span>
+    </a>
+</nav>
+
+<h1>Список фильмов</h1>
+
+<div class="navbar">
+    <div class="col-sm-6">
+
+        <input type="button"  id="btnShow" value="Add new movie" />
+    </div>
+<div class="col-sm-5">
+    <form class="input-group">
+        <label>From:</label>
+        <input  type="date" id="startDate" name="startDate" placeholder="yyyy-MM-dd">
+        <label >To:</label>
+        <input  type="date" id="endDate" name="endDate" placeholder="yyyy-MM-dd">
+        <input type="button" id="btnFilter" value="Search" />
+    </form>
+</div>
+</div>
+
+<!--<br>-->
+
+<div id="addMovieForm" hidden>
+<!--<div id="addMovieForm" >-->
+    <form >
+    <div class="mainArea">
+        <input id="movieId" name="movieId" type="text" hidden/>
+
+        <label>Movie title:</label>
+        <input id="movieTitle" name="movieTitle" type="text"/>
+
+        <label>Release Date:</label>
+        <input type="text" id="releaseDate" name="releaseDate" required placeholder="yyyy-MM-dd">
+
+        <label>Rating:</label>
+        <input type="text" id="rating" name="rating" placeholder="0.0" required>
+
+        <label>Director:</label>
+        <select name="movieDirectorId" id="movieDirectorId" style="width: 15%">
+            <option>
+                Movie director
+            </option>
+        </select>
+
+        <button id="btnSave">Add</button>
+        <button id="btnClean">Clear</button>
+
+    </div>
+    </form>
+
+</div>
+<hr/>
+
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Movie title</th>
+            <th>Release Date</th>
+            <th>Rating</th>
+            <th>Director</th>
+        </tr>
+        </thead>
+        <tbody id="movieList">
+        <tr>
+            <td>title</td>
+            <td>2000-12-09</td>
+            <td>4.5</td>
+            <td>Some director</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<hr/>
+
+
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script type="text/javascript" src="js/jquery.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script type="text/javascript" src="js/bootstrap.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+
+</body>
+</html>

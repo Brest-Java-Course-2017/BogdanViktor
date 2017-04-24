@@ -1,6 +1,4 @@
 allprojects  {
-    apply plugin: 'maven'
-
     group = 'com.epam.result'
     version = '1.0-SNAPSHOT'
 }

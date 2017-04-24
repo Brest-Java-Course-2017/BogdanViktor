@@ -14,6 +14,7 @@ import java.util.List;
 /**
  * @author  Bogdan Viktor
  */
+@CrossOrigin
 @RestController
 public class DirectorRestController {
     private static final Logger LOGGER = LogManager.getLogger();
