@@ -70,16 +70,16 @@ function addMovie() {
     });
 }
 
-
 function formToJSON() {
     return JSON.stringify({
-        "movieId":  null,
+        // "movieId": $('#movieTitle').val(),
         "movieTitle": $('#movieTitle').val(),
         "releaseDate": $('#releaseDate').val(),
         "rating": $('#rating').val(),
         "movieDirectorId": $('#movieDirectorId').val(),
     });
 }
+
 
 function getAllDirectors() {
     console.log('getAllDirectors');
@@ -104,23 +104,6 @@ function renderDirectorsList(data) {
         $("#movieDirectorId").append(str);
     });
 }
-
-$(document).on("click", "a", function() {
-    var action = $(this).text();
-    var selectedUserId = $(this).data("id");
-    if (action != "delete") {
-        $.each(dto, function (index) {
-            if (dto[index].userId == selectedUserId) {
-                $("#userId").val(selectedUserId);
-                $("#login").val(dto[index].login);
-                $("#password").val(dto[index].password);
-                $("#description").val(dto[index].description);
-            }
-        });
-    } else {
-        deleteUser(selectedUserId);
-    }
-});
 
 
 findAll();
@@ -205,6 +188,7 @@ clearSelect();
         .append("<input class='selected' id='movieId_forUpdate' name='"+row+"' type='text' value='"+s+"' >");
 
     var s = $("#movieTitle_"+row).text();
+    s = s.replace("'", "&quot;")
     $("#movieTitle_"+row).text("")
     $("#movieTitle_"+row)
         .append("<input class='selected' id='movieTitle_forUpdate' name='"+row+"' type='text' value='"+s+"' size='40'>");

@@ -22,47 +22,27 @@
     </a>
 </nav>
 
-<h1>List of movies</h1>
-
+<h1>List of directors</h1>
 <div class="navbar">
     <div class="col-sm-6">
 
-        <input type="button"  id="btnShow" value="Add new movie" />
+        <input type="button"  id="btnShow" value="Add new director" />
     </div>
-<div class="col-sm-5">
-    <form class="input-group">
-        <label>From:</label>
-        <input  type="date" id="startDate" name="startDate" placeholder="yyyy-MM-dd">
-        <label >To:</label>
-        <input  type="date" id="endDate" name="endDate" placeholder="yyyy-MM-dd">
-        <input type="button" id="btnFilter" value="Search" />
-    </form>
-</div>
+
 </div>
 
-<!--<br>-->
 
-<div id="addMovieForm" hidden>
+<div id="addDirectorForm" hidden>
 <!--<div id="addMovieForm" >-->
     <form >
     <div class="mainArea">
-        <input id="movieId" name="movieId" type="text" hidden/>
+        <input id="directorId" name="directorId" type="text" hidden/>
 
-        <label>Movie title:</label>
-        <input id="movieTitle" name="movieTitle" type="text"/>
+        <label>First name:</label>
+        <input id="firstName" name="firstName" type="text" required/>
 
-        <label>Release Date:</label>
-        <input type="text" id="releaseDate" name="releaseDate" required placeholder="yyyy-MM-dd">
-
-        <label>Rating:</label>
-        <input type="text" id="rating" name="rating" placeholder="0.0" required>
-
-        <label>Director:</label>
-        <select name="movieDirectorId" id="movieDirectorId" style="width: 15%">
-            <option>
-                Movie director
-            </option>
-        </select>
+        <label>Last name:</label>
+        <input  id="lastName" name="lastName" type="text" required />
 
         <button id="btnSave">Add</button>
         <button id="btnClean">Clear</button>
@@ -78,18 +58,16 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <th>Movie title</th>
-            <th>Release Date</th>
-            <th>Rating</th>
-            <th>Director</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Average rating of movies</th>
         </tr>
         </thead>
-        <tbody id="movieList">
+        <tbody id="directorList">
         <tr>
-            <td>title</td>
-            <td>2000-12-09</td>
+            <td>Bob</td>
+            <td>Ivanov</td>
             <td>4.5</td>
-            <td>Some director</td>
         </tr>
         </tbody>
     </table>
@@ -102,7 +80,7 @@
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script type="text/javascript" src="js/jquery.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script type="text/javascript" src="js/main.js"></script>
+<script type="text/javascript" src="js/directorsPage.js"></script>
 
 </body>
 </html>
