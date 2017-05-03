@@ -1,6 +1,10 @@
 var DIRECTOR_URL = "/director";
 var DIRECTORS_URL = "/directors";
-var URL = "http://localhost:8180";
+// var URL = "http://localhost:8180";
+var URL = "http://localhost:8088";
+
+var oldValues = [];
+
 
 $.dto = null;
 
@@ -51,8 +55,19 @@ $('#btnShow').click(function () {
     clearSelect();
 });
 
-function clearSelect(event) {
+function clearSelect(directorId) {
     if($(".selected").length==0) return;
+
+    $(".selected").each(function (index, elem) {
+        if($(this).val() != oldValues[index]){
+            console.log(index+"  :"+$(this).val()+"   :  "+oldValues[index]+"    ");
+            if(confirm("The director was changed. Do you want to save him?")){
+                updateDirector(directorId);
+            }else {
+                $(this).val(oldValues[index]);
+            }
+        }
+    });
 
     $(".selectedRow").attr("style", "");
     $(".selectedRow").attr("class", "");
@@ -66,7 +81,7 @@ function clearSelect(event) {
     $("select.selected option:selected").parent().parent().empty().html(s);
 
     $("button:hidden[name='edit']").show();
-    $("button.selected").remove();
+    $("button.selectedBtn").remove();
 
 }
 
@@ -114,7 +129,8 @@ $('#btnClean').click(function () {
 });
 
 function editDirector(directorId) {
-    clearSelect();
+
+    clearSelect(directorId);
     $("#addMovieForm").hide();
 
 
@@ -125,17 +141,21 @@ function editDirector(directorId) {
     $("#"+row).attr("class", "selectedRow");
 
     var s = $("#directorId_"+row).text();
+    oldValues[0] = s;
     $("#directorId_"+row).text("")
     $("#directorId_"+row)
         .append("<input class='selected' id='directorId_forUpdate' name='"+row+"' type='text' value='"+s+"' >");
 
     var s = $("#firstName_"+row).text();
+    oldValues[1] = s;
     s = s.replace("'", "&quot;")
     $("#firstName_"+row).text("")
     $("#firstName_"+row)
         .append("<input class='selected' id='firstName_forUpdate' name='"+row+"' type='text' value='"+s+"' size='10'>");
 
     s = $("#lastName_"+row).text();
+    oldValues[2] = s;
+    s = s.replace("'", "&quot;")
     $("#lastName_"+row).text("")
     $("#lastName_"+row)
         .append("<input class='selected' id='lastName_forUpdate' name='"+row+"' type='text' value='"+s+"' size='10'>");
@@ -143,7 +163,7 @@ function editDirector(directorId) {
 
     $("#editButton_"+row).hide();
     $("#buttonGroup_"+row);
-    $("#buttonGroup_"+row).prepend("<button class='selected' id='btnUpdateDirector' onclick=\"updateDirector(" +
+    $("#buttonGroup_"+row).prepend("<button class='selectedBtn' id='btnUpdateDirector' onclick=\"updateDirector(" +
         directorId +
         ")\">Save</button>");
 
@@ -178,6 +198,7 @@ function formToJSON_forUpdate() {
 
 
 function deleteDirector(directorId) {
+    clearSelect(directorId);
     if (confirm("Delete this director: " + directorId + "?")) {
         var url = URL + DIRECTOR_URL +"/"+ directorId;
 

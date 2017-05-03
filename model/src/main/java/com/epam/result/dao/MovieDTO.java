@@ -19,7 +19,7 @@ public class MovieDTO {
     /** This is movie title. */
     private String movieTitle;
     /** This is movie release date. */
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, timezone="GMT+3", pattern = "yyyy-MM-dd")
     private Date releaseDate;
     /** This is movie release rating. */
     private Double rating;

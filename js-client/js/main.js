@@ -1,8 +1,11 @@
 var MOVIES_URL = "/movies";
 var MOVIE_URL = "/movie";
 var DIRECTORS_URL = "/directors";
-var URL = "http://localhost:8180";
+// var URL = "http://localhost:8180";
+var URL = "http://localhost:8088";
 var FILTER_URL="/movies/DateFilter";
+
+var oldValues = [];
 
 $.dto = null;
 
@@ -125,6 +128,8 @@ function findAll() {
 
 
 function deleteMovie(movieId, movieTitle) {
+    clearSelect(movieId);
+
     if (confirm("Delete this movie: " + movieTitle + "?")) {
         var url = URL + MOVIE_URL +"/"+ movieId;
 
@@ -171,34 +176,39 @@ function drawRow(movie) {
 
 
 function editMovie(movieId) {
-clearSelect();
-    $("#addMovieForm").hide();
 
+clearSelect(movieId);
+
+
+    $("#addMovieForm").hide();
 
     var row = "row"+movieId;
     var val=[];
     var str="";
     $("#"+row).css("border", "2px solid red");
     $("#"+row).attr("class", "selectedRow");
-    // $("#"+row).wrap("<form></form>");
 
     var s = $("#movieId_"+row).text();
+    oldValues[0] = s;
     $("#movieId_"+row).text("")
     $("#movieId_"+row)
         .append("<input class='selected' id='movieId_forUpdate' name='"+row+"' type='text' value='"+s+"' >");
 
     var s = $("#movieTitle_"+row).text();
-    s = s.replace("'", "&quot;")
+    oldValues[1] = s;
+    s = s.replace("'", "&quot;");
     $("#movieTitle_"+row).text("")
     $("#movieTitle_"+row)
         .append("<input class='selected' id='movieTitle_forUpdate' name='"+row+"' type='text' value='"+s+"' size='40'>");
 
     s = $("#releaseDate_"+row).text();
+    oldValues[2] = s;
     $("#releaseDate_"+row).text("")
     $("#releaseDate_"+row)
         .append("<input class='selected' id='releaseDate_forUpdate' name='"+row+"' type='text' value='"+s+"' size='10'>");
 
     s = $("#rating_"+row).text();
+    oldValues[3] = s;
     $("#rating_"+row).text("")
     $("#rating_"+row)
         .append("<input class='selected' id='rating_forUpdate'  name='"+row+"' type='text' value='"+s+"' size='3'>");
@@ -213,7 +223,7 @@ clearSelect();
 
     $("#editButton_"+row).hide();
     $("#buttonGroup_"+row);
-    $("#buttonGroup_"+row).prepend("<button class='selected' id='btnUpdateMovie' onclick=\"updateMovie(" +
+    $("#buttonGroup_"+row).prepend("<button class='selectedButt' id='btnUpdateMovie' onclick=\"updateMovie(" +
         movieId +
         ")\">Save</button>");
 
@@ -242,9 +252,10 @@ function renderDirectorsListForEdit(data) {
         if(r==directorName){
             var str = "<option selected value="+director.directorId+" >"+director.firstName+" "+director.lastName+"</option>";
             console.log(index+" : " +r + "=" +directorName);
+            oldValues[4] = director.directorId;
 
         } else {
-            var str = "<option value="+director.directorId+">"+director.firstName+" "+director.lastName+"</option>";
+            var str = "<option id='selectedDirector' value="+director.directorId+">"+director.firstName+" "+director.lastName+"</option>";
             console.log(index+" : " +r + "=" +directorName);
 
         }
@@ -253,13 +264,27 @@ function renderDirectorsListForEdit(data) {
     });
 }
 
-function clearSelect(event) {
+
+
+function clearSelect(movieId) {
+
     if($(".selected").length==0) return;
+
+    $(".selected").each(function (index, elem) {
+        if($(this).val() != oldValues[index]){
+            console.log(index+"  :"+$(this).val()+"   :  "+oldValues[index]+"    ");
+            if(confirm("The movie was changed. Do you want to save it?")){
+                updateMovie(movieId);
+            }else {
+                $(this).val(oldValues[index]);
+            }
+        }
+    });
+
 
     $(".selectedRow").attr("style", "");
     $(".selectedRow").attr("class", "");
     $("input.selected").each(function (index, elem) {
-        console.log($(this).tagName)
         var val = $(this).val();
         $(this).parent().empty().html(val);
     })
@@ -268,7 +293,7 @@ function clearSelect(event) {
     $("select.selected option:selected").parent().parent().empty().html(s);
 
     $("button:hidden[name='edit']").show();
-    $("button.selected").remove();
+    $("button.selectedButt").remove();
 
 }
 
